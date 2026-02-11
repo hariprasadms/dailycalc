@@ -363,6 +363,416 @@
             display: block;
         }
 
+        .mortgage-calc-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .calc-main {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calc-results {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section.expandable {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--background);
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .section-header:hover {
+            background: #f1f5f9;
+        }
+
+        .section-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+
+        .section-header.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .section-content.expanded {
+            display: block;
+        }
+
+        .section-content h4 {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .input-with-prefix,
+        .input-with-suffix {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-prefix input,
+        .input-with-suffix input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .input-with-prefix input {
+            padding-left: 2rem;
+        }
+
+        .input-with-suffix input {
+            padding-right: 2.5rem;
+        }
+
+        .prefix {
+            position: absolute;
+            left: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .suffix {
+            position: absolute;
+            right: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .date-inputs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .date-inputs select,
+        .date-inputs input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .calculate-btn {
+            flex: 1;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .clear-btn {
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .clear-btn:hover {
+            background: var(--background);
+            border-color: var(--text-secondary);
+        }
+
+        .note {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .result-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .result-card.primary-result {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+        }
+
+        .result-card.primary-result h3 {
+            color: white;
+            opacity: 0.9;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .result-card.primary-result .result-value {
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .result-card h4 {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-row.highlight {
+            background: var(--background);
+            margin: 0 -1.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .result-row span {
+            color: var(--text-secondary);
+        }
+
+        .result-row strong {
+            color: var(--text-primary);
+        }
+
+        .schedule-btn {
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .schedule-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .schedule-section {
+            margin-top: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .schedule-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .schedule-table-wrapper {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .schedule-table thead {
+            position: sticky;
+            top: 0;
+            background: var(--background);
+            z-index: 10;
+        }
+
+        .schedule-table th {
+            text-align: left;
+            padding: 0.75rem;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .schedule-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .schedule-table tbody tr:hover {
+            background: var(--background);
+        }
+
+        .educational-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 3rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .content-section h3 {
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .content-section ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tip-card {
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .tip-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .tip-card p {
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .faq-section {
+            margin-top: 3rem;
+        }
+
+        .faq-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .faq-item p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1024px) {
+            .mortgage-calc-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .calc-results {
+                position: static;
+            }
+        }
+
         .calc-container {
             max-width: 600px;
             margin: 0 auto;
@@ -595,52 +1005,346 @@
     <div id="mortgageCalc" class="calculator-page">
         <div class="container">
             <a href="#" class="back-btn" onclick="showHome(); return false;">← Back to Home</a>
-            <div class="calc-container">
-                <div class="calc-header">
-                    <h2>🏠 Mortgage Calculator</h2>
-                    <p>Calculate your monthly mortgage payment and total interest.</p>
+            <div class="mortgage-calc-layout">
+                <div class="calc-main">
+                    <div class="calc-header">
+                        <h2>🏠 Mortgage Calculator Fixed-Rate</h2>
+                        <p>Modify the values and see the instant mortgage results</p>
+                    </div>
+                    
+                    <form id="mortgageForm" onsubmit="calculateMortgage(event)">
+                        <!-- Basic Info -->
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label for="homePrice">Home Price</label>
+                                <div class="input-with-prefix">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="homePrice" required min="1" step="1000" value="300000">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="downPaymentPercent">Down Payment</label>
+                                    <div class="input-with-suffix">
+                                        <input type="number" id="downPaymentPercent" required min="0" max="100" step="0.1" value="20">
+                                        <span class="suffix">%</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class="input-with-prefix">
+                                        <span class="prefix">$</span>
+                                        <input type="number" id="downPaymentDollar" required min="0" step="1000" value="60000">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="loanTerm">Loan Term</label>
+                                    <div class="input-with-suffix">
+                                        <input type="number" id="loanTerm" required min="1" max="50" step="1" value="30">
+                                        <span class="suffix">years</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="interestRate">Interest Rate (Fixed)</label>
+                                    <div class="input-with-suffix">
+                                        <input type="number" id="interestRate" required min="0" step="0.01" value="6.5">
+                                        <span class="suffix">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startMonth">Start Date</label>
+                                <div class="date-inputs">
+                                    <select id="startMonth">
+                                        <option value="0">Jan</option>
+                                        <option value="1">Feb</option>
+                                        <option value="2">Mar</option>
+                                        <option value="3">Apr</option>
+                                        <option value="4">May</option>
+                                        <option value="5">Jun</option>
+                                        <option value="6">Jul</option>
+                                        <option value="7">Aug</option>
+                                        <option value="8">Sep</option>
+                                        <option value="9">Oct</option>
+                                        <option value="10">Nov</option>
+                                        <option value="11">Dec</option>
+                                    </select>
+                                    <input type="number" id="startYear" min="2020" max="2050" value="2026">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Taxes & Costs -->
+                        <div class="form-section expandable">
+                            <div class="section-header" onclick="toggleSection('taxSection')">
+                                <h3>Include Taxes & Costs Below</h3>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div id="taxSection" class="section-content">
+                                <h4>Annual Tax & Cost</h4>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="propertyTax">Property Tax</label>
+                                        <div class="input-with-prefix">
+                                            <span class="prefix">$</span>
+                                            <input type="number" id="propertyTax" min="0" step="100" value="3000">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <div class="input-with-suffix">
+                                            <input type="number" id="propertyTaxPercent" min="0" step="0.01" value="1">
+                                            <span class="suffix">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="homeIns">Home Ins.</label>
+                                        <div class="input-with-prefix">
+                                            <span class="prefix">$</span>
+                                            <input type="number" id="homeIns" min="0" step="100" value="1200">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <div class="input-with-suffix">
+                                            <input type="number" id="homeInsPercent" min="0" step="0.01" value="0.4">
+                                            <span class="suffix">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pmiPercent">PMI</label>
+                                        <div class="input-with-suffix">
+                                            <input type="number" id="pmiPercent" min="0" step="0.01" value="0.5">
+                                            <span class="suffix">%</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <div class="input-with-prefix">
+                                            <span class="prefix">$</span>
+                                            <input type="number" id="pmi" min="0" step="10" value="100">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="hoaFee">HOA Fee</label>
+                                        <div class="input-with-prefix">
+                                            <span class="prefix">$</span>
+                                            <input type="number" id="hoaFee" min="0" step="10" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <div class="input-with-suffix">
+                                            <input type="number" id="hoaFeePercent" min="0" step="0.01" value="0">
+                                            <span class="suffix">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="otherCosts">Other Costs</label>
+                                        <div class="input-with-prefix">
+                                            <span class="prefix">$</span>
+                                            <input type="number" id="otherCosts" min="0" step="10" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <div class="input-with-suffix">
+                                            <input type="number" id="otherCostsPercent" min="0" step="0.01" value="0">
+                                            <span class="suffix">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="submit" class="calculate-btn">CALCULATE</button>
+                            <button type="button" class="clear-btn" onclick="clearMortgageForm()">Clear</button>
+                        </div>
+                    </form>
+
+                    <p class="note">* Currently supports fixed-rate mortgages only.</p>
                 </div>
-                <form onsubmit="calculateMortgage(event)">
-                    <div class="form-group">
-                        <label for="homePrice">Home Price ($)</label>
-                        <input type="number" id="homePrice" required min="1" step="1000" value="300000">
+
+                <!-- Results Section -->
+                <div class="calc-results" id="mortgageResults" style="display: none;">
+                    <div class="result-card primary-result">
+                        <h3>Monthly Pay</h3>
+                        <div class="result-value" id="monthlyPayDisplay">$0.00</div>
                     </div>
-                    <div class="form-group">
-                        <label for="downPayment">Down Payment ($)</label>
-                        <input type="number" id="downPayment" required min="0" step="1000" value="60000">
-                    </div>
-                    <div class="form-group">
-                        <label for="interestRate">Interest Rate (%)</label>
-                        <input type="number" id="interestRate" required min="0" step="0.01" value="6.5">
-                    </div>
-                    <div class="form-group">
-                        <label for="loanTerm">Loan Term (years)</label>
-                        <select id="loanTerm">
-                            <option value="15">15 years</option>
-                            <option value="20">20 years</option>
-                            <option value="30" selected>30 years</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="calculate-btn">Calculate</button>
-                </form>
-                <div id="mortgageResult" class="result">
-                    <h3>Your Monthly Payment</h3>
-                    <div class="result-value" id="monthlyPayment">$0</div>
-                    <div class="result-details">
+
+                    <div class="result-card breakdown">
+                        <h4>Monthly</h4>
                         <div class="result-row">
-                            <span>Loan Amount:</span>
-                            <strong id="loanAmount">$0</strong>
+                            <span>Principal & Interest</span>
+                            <strong id="monthlyPI">$0</strong>
                         </div>
                         <div class="result-row">
-                            <span>Total Interest:</span>
-                            <strong id="totalInterest">$0</strong>
+                            <span>Property Tax</span>
+                            <strong id="monthlyTax">$0</strong>
                         </div>
                         <div class="result-row">
-                            <span>Total Payment:</span>
-                            <strong id="totalPayment">$0</strong>
+                            <span>Home Insurance</span>
+                            <strong id="monthlyIns">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>PMI</span>
+                            <strong id="monthlyPMI">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>HOA / Other</span>
+                            <strong id="monthlyOther">$0</strong>
+                        </div>
+                    </div>
+
+                    <div class="result-card totals">
+                        <div class="result-row highlight">
+                            <span>Total Out-of-Pocket</span>
+                            <strong id="totalOutOfPocket">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Loan Amount</span>
+                            <strong id="loanAmountDisplay">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Down Payment</span>
+                            <strong id="downPaymentDisplay">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Total Interest</span>
+                            <strong id="totalInterestDisplay">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Total Principal & Int.</span>
+                            <strong id="totalPrincipalInt">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Total Tax</span>
+                            <strong id="totalTaxDisplay">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Total Insurance</span>
+                            <strong id="totalInsDisplay">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Total PMI / Fees</span>
+                            <strong id="totalPMIFees">$0 / $0</strong>
+                        </div>
+                        <div class="result-row highlight">
+                            <span>Total All-in Cost</span>
+                            <strong id="totalAllIn">$0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Payoff Date</span>
+                            <strong id="payoffDate">-</strong>
+                        </div>
+                    </div>
+
+                    <button class="schedule-btn" onclick="toggleSchedule()">View Amortization Schedule</button>
+
+                    <div id="scheduleSection" class="schedule-section" style="display: none;">
+                        <h3>Amortization Schedule</h3>
+                        <div class="schedule-table-wrapper">
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Interest</th>
+                                        <th>Principal</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scheduleBody">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Educational Content -->
+            <div class="educational-content">
+                <section class="content-section">
+                    <h2>Mortgage Calculation Guide</h2>
+                    
+                    <h3>What is a Mortgage?</h3>
+                    <p>A mortgage is a loan specifically designed for purchasing a home or other real estate. The property itself serves as collateral for the loan. Buying a home is likely the biggest purchase of your life, and our free Mortgage Calculator helps you estimate your total monthly payment for 2025 and beyond.</p>
+                    <p>By factoring in property taxes, homeowners insurance, and PMI, you get a realistic picture of your true housing costs. Use this tool to compare different loan scenarios, see how a larger down payment affects your wallet, and plan for a financially secure future.</p>
+
+                    <h3>What is PITI?</h3>
+                    <p>Lenders use the acronym <strong>PITI</strong> to describe the four main components of your monthly mortgage bill:</p>
+                    <ul>
+                        <li><strong>Principal:</strong> The money that goes directly toward paying down your loan balance.</li>
+                        <li><strong>Interest:</strong> The fee the lender charges you for borrowing the money. In the beginning, this makes up most of your payment.</li>
+                        <li><strong>Taxes:</strong> Property taxes levied by your local government to fund schools and services.</li>
+                        <li><strong>Insurance:</strong> Homeowners insurance protects your home from damage. If you put less than 20% down, this may also include PMI (Private Mortgage Insurance).</li>
+                    </ul>
+
+                    <h3>Smart Strategies</h3>
+                    <ul>
+                        <li><strong>Avoid PMI:</strong> A down payment of 20% or more typically removes the need for private mortgage insurance.</li>
+                        <li><strong>15 vs. 30 Year:</strong> A 30-year term offers lower monthly bills, while a 15-year term saves massive amounts on total interest.</li>
+                        <li><strong>Extra Payments:</strong> Even adding $50/month to your principal can shave years off your loan term.</li>
+                    </ul>
+                </section>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>Costs of Ownership</h4>
+                        <p><strong>Closing Costs:</strong> Expect to pay 2% - 5% of purchase price upfront ($8k-$20k on $400k).</p>
+                        <p><strong>Maintenance:</strong> Save 1% - 3% of home value annually for repairs ($4k/yr on $400k).</p>
+                        <p><strong>Utilities:</strong> Avg. $400/mo for electric, gas, water, trash & internet.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>Lower Your Payment</h4>
+                        <p><strong>More Down Payment:</strong> Every $10k down saves ~$60/mo in interest & principle.</p>
+                        <p><strong>Eliminate PMI:</strong> Reach 20% equity to drop insurance ($30-$70/mo per $100k).</p>
+                        <p><strong>Shop Insurance:</strong> Rates vary by hundreds. Compare quotes annually to save.</p>
+                    </div>
+                </div>
+
+                <section class="faq-section">
+                    <h3>Frequently Asked Questions</h3>
+                    
+                    <div class="faq-item">
+                        <h4>Do I really need a 20% down payment?</h4>
+                        <p>No. While 20% avoids Private Mortgage Insurance (PMI), many lenders accept as little as 3% - 3.5% for conventional or FHA loans. However, a lower down payment usually means a higher monthly payment.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>What is included in my monthly payment?</h4>
+                        <p>Your total payment typically includes Principal and Interest (the loan itself), plus Escrow items like Property Taxes and Homeowners Insurance. If your down payment is under 20%, it may also include PMI.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>How can I pay off my mortgage faster?</h4>
+                        <p>Making extra payments toward your principal balance reduces total interest. Even one extra payment per year can shave years off a 30-year term.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Should I choose a 15-year or 30-year term?</h4>
+                        <p>A 30-year loan offers lower monthly payments, making it easier to qualify. A 15-year loan has higher monthly payments but saves you tens of thousands of dollars in interest over the life of the loan.</p>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -754,22 +1458,188 @@
             e.preventDefault();
             
             const homePrice = parseFloat(document.getElementById('homePrice').value);
-            const downPayment = parseFloat(document.getElementById('downPayment').value);
-            const interestRate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
-            const loanTerm = parseInt(document.getElementById('loanTerm').value) * 12;
+            const downPaymentPercent = parseFloat(document.getElementById('downPaymentPercent').value);
+            const downPaymentDollar = parseFloat(document.getElementById('downPaymentDollar').value);
+            const loanTermYears = parseFloat(document.getElementById('loanTerm').value);
+            const annualRate = parseFloat(document.getElementById('interestRate').value);
+            const startMonth = parseInt(document.getElementById('startMonth').value);
+            const startYear = parseInt(document.getElementById('startYear').value);
             
-            const loanAmount = homePrice - downPayment;
-            const monthlyPayment = loanAmount * (interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
-            const totalPayment = monthlyPayment * loanTerm;
-            const totalInterest = totalPayment - loanAmount;
+            // Tax and insurance (annual amounts)
+            const propertyTaxAnnual = parseFloat(document.getElementById('propertyTax').value) || 0;
+            const homeInsAnnual = parseFloat(document.getElementById('homeIns').value) || 0;
+            const pmiPercent = parseFloat(document.getElementById('pmiPercent').value) || 0;
+            const hoaFeeMonthly = parseFloat(document.getElementById('hoaFee').value) || 0;
+            const otherCostsMonthly = parseFloat(document.getElementById('otherCosts').value) || 0;
             
-            document.getElementById('monthlyPayment').textContent = '$' + monthlyPayment.toFixed(2);
-            document.getElementById('loanAmount').textContent = '$' + loanAmount.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('totalInterest').textContent = '$' + totalInterest.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('totalPayment').textContent = '$' + totalPayment.toLocaleString('en-US', {minimumFractionDigits: 2});
+            // Calculate loan details
+            const loanAmount = homePrice - downPaymentDollar;
+            const monthlyRate = annualRate / 100 / 12;
+            const numPayments = loanTermYears * 12;
             
-            document.getElementById('mortgageResult').classList.add('show');
+            // Monthly P&I payment
+            const monthlyPI = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
+                             (Math.pow(1 + monthlyRate, numPayments) - 1);
+            
+            // Monthly additional costs
+            const monthlyPropertyTax = propertyTaxAnnual / 12;
+            const monthlyHomeIns = homeInsAnnual / 12;
+            const monthlyPMI = downPaymentPercent < 20 ? (loanAmount * (pmiPercent / 100) / 12) : 0;
+            const monthlyOther = hoaFeeMonthly + otherCostsMonthly;
+            
+            // Total monthly payment
+            const totalMonthly = monthlyPI + monthlyPropertyTax + monthlyHomeIns + monthlyPMI + monthlyOther;
+            
+            // Calculate totals
+            const totalPrincipalInterest = monthlyPI * numPayments;
+            const totalInterest = totalPrincipalInterest - loanAmount;
+            const totalTax = monthlyPropertyTax * numPayments;
+            const totalIns = monthlyHomeIns * numPayments;
+            const totalPMI = monthlyPMI * numPayments;
+            const totalOther = monthlyOther * numPayments;
+            const totalAllIn = homePrice + totalInterest + totalTax + totalIns + totalPMI + totalOther;
+            const totalOutOfPocket = downPaymentDollar + totalAllIn - homePrice;
+            
+            // Payoff date
+            const payoffDate = new Date(startYear, startMonth);
+            payoffDate.setMonth(payoffDate.getMonth() + numPayments);
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const payoffString = monthNames[payoffDate.getMonth()] + ' ' + payoffDate.getFullYear();
+            
+            // Update display
+            document.getElementById('monthlyPayDisplay').textContent = '$' + totalMonthly.toFixed(2);
+            document.getElementById('monthlyPI').textContent = '$' + monthlyPI.toFixed(0);
+            document.getElementById('monthlyTax').textContent = '$' + monthlyPropertyTax.toFixed(0);
+            document.getElementById('monthlyIns').textContent = '$' + monthlyHomeIns.toFixed(0);
+            document.getElementById('monthlyPMI').textContent = '$' + monthlyPMI.toFixed(0);
+            document.getElementById('monthlyOther').textContent = '$' + monthlyOther.toFixed(0);
+            
+            document.getElementById('totalOutOfPocket').textContent = '$' + totalOutOfPocket.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('loanAmountDisplay').textContent = '$' + loanAmount.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('downPaymentDisplay').textContent = '$' + downPaymentDollar.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('totalInterestDisplay').textContent = '$' + totalInterest.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('totalPrincipalInt').textContent = '$' + totalPrincipalInterest.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('totalTaxDisplay').textContent = '$' + totalTax.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('totalInsDisplay').textContent = '$' + totalIns.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('totalPMIFees').textContent = '$' + totalPMI.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}) + ' / $' + totalOther.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('totalAllIn').textContent = '$' + totalAllIn.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            document.getElementById('payoffDate').textContent = payoffString;
+            
+            // Generate amortization schedule
+            generateAmortizationSchedule(loanAmount, monthlyRate, numPayments, startMonth, startYear);
+            
+            document.getElementById('mortgageResults').style.display = 'block';
         }
+
+        function generateAmortizationSchedule(principal, monthlyRate, numPayments, startMonth, startYear) {
+            const scheduleBody = document.getElementById('scheduleBody');
+            scheduleBody.innerHTML = '';
+            
+            let balance = principal;
+            let currentDate = new Date(startYear, startMonth);
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            
+            for (let i = 1; i <= numPayments; i++) {
+                const interestPayment = balance * monthlyRate;
+                const principalPayment = (principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
+                                         (Math.pow(1 + monthlyRate, numPayments) - 1)) - interestPayment;
+                balance -= principalPayment;
+                
+                // Only show every 12th payment to keep the table manageable
+                if (i % 12 === 0 || i === 1 || i === numPayments) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}</td>
+                        <td>$${interestPayment.toFixed(2)}</td>
+                        <td>$${principalPayment.toFixed(2)}</td>
+                        <td>$${Math.max(0, balance).toFixed(2)}</td>
+                    `;
+                    scheduleBody.appendChild(row);
+                }
+                
+                currentDate.setMonth(currentDate.getMonth() + 1);
+            }
+        }
+
+        function toggleSchedule() {
+            const scheduleSection = document.getElementById('scheduleSection');
+            if (scheduleSection.style.display === 'none') {
+                scheduleSection.style.display = 'block';
+            } else {
+                scheduleSection.style.display = 'none';
+            }
+        }
+
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const header = section.previousElementSibling;
+            
+            if (section.classList.contains('expanded')) {
+                section.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                section.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function clearMortgageForm() {
+            document.getElementById('mortgageForm').reset();
+            document.getElementById('mortgageResults').style.display = 'none';
+            document.getElementById('scheduleSection').style.display = 'none';
+        }
+
+        // Sync down payment fields
+        document.getElementById('downPaymentPercent').addEventListener('input', function() {
+            const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+            const percent = parseFloat(this.value) || 0;
+            const dollar = (homePrice * percent / 100).toFixed(0);
+            document.getElementById('downPaymentDollar').value = dollar;
+        });
+
+        document.getElementById('downPaymentDollar').addEventListener('input', function() {
+            const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+            const dollar = parseFloat(this.value) || 0;
+            const percent = homePrice > 0 ? ((dollar / homePrice) * 100).toFixed(2) : 0;
+            document.getElementById('downPaymentPercent').value = percent;
+        });
+
+        document.getElementById('homePrice').addEventListener('input', function() {
+            const percent = parseFloat(document.getElementById('downPaymentPercent').value) || 0;
+            const homePrice = parseFloat(this.value) || 0;
+            const dollar = (homePrice * percent / 100).toFixed(0);
+            document.getElementById('downPaymentDollar').value = dollar;
+        });
+
+        // Sync property tax fields
+        document.getElementById('propertyTax').addEventListener('input', function() {
+            const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+            const dollar = parseFloat(this.value) || 0;
+            const percent = homePrice > 0 ? ((dollar / homePrice) * 100).toFixed(2) : 0;
+            document.getElementById('propertyTaxPercent').value = percent;
+        });
+
+        document.getElementById('propertyTaxPercent').addEventListener('input', function() {
+            const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+            const percent = parseFloat(this.value) || 0;
+            const dollar = (homePrice * percent / 100).toFixed(0);
+            document.getElementById('propertyTax').value = dollar;
+        });
+
+        // Sync home insurance fields
+        document.getElementById('homeIns').addEventListener('input', function() {
+            const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+            const dollar = parseFloat(this.value) || 0;
+            const percent = homePrice > 0 ? ((dollar / homePrice) * 100).toFixed(2) : 0;
+            document.getElementById('homeInsPercent').value = percent;
+        });
+
+        document.getElementById('homeInsPercent').addEventListener('input', function() {
+            const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+            const percent = parseFloat(this.value) || 0;
+            const dollar = (homePrice * percent / 100).toFixed(0);
+            document.getElementById('homeIns').value = dollar;
+        });
 
         function calculateBMI(e) {
             e.preventDefault();
