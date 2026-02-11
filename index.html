@@ -31,6 +31,35 @@
             line-height: 1.6;
         }
 
+        /* Accessibility: Visually hidden but screen reader accessible */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Skip to main content link for keyboard users */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -48,7 +77,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
-            gap: 2rem;
         }
 
         .logo {
@@ -56,41 +84,6 @@
             font-weight: 700;
             letter-spacing: -0.5px;
             flex-shrink: 0;
-        }
-
-        .header-search {
-            flex: 1;
-            max-width: 500px;
-            position: relative;
-        }
-
-        .header-search input {
-            width: 100%;
-            padding: 0.75rem 3rem 0.75rem 1rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            background: rgba(255, 255, 255, 0.95);
-            transition: all 0.3s;
-        }
-
-        .header-search input:focus {
-            outline: none;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-        }
-
-        .header-search input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .header-search .search-icon {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            pointer-events: none;
         }
 
         .nav-links {
@@ -149,7 +142,7 @@
 
         .hero {
             text-align: center;
-            padding: 3rem 0 2rem;
+            padding: 3rem 0 2.5rem;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
         }
@@ -164,7 +157,88 @@
             font-size: 1.1rem;
             opacity: 0.95;
             max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-search {
+            max-width: 600px;
             margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-search input {
+            width: 100%;
+            padding: 1rem 7rem 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .hero-search input:focus {
+            outline: 3px solid #fbbf24;
+            outline-offset: 2px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .hero-search input:focus-visible {
+            outline: 3px solid #fbbf24;
+            outline-offset: 2px;
+        }
+
+        .hero-search input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .hero-search .search-controls {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-search .clear-search {
+            background: var(--text-secondary);
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: none;
+        }
+
+        .hero-search .clear-search.visible {
+            display: block;
+            tabindex: 0;
+        }
+
+        .hero-search .clear-search:hover {
+            background: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        .hero-search .clear-search:focus {
+            outline: 3px solid #fbbf24;
+            outline-offset: 2px;
+        }
+
+        .hero-search .clear-search:focus-visible {
+            outline: 3px solid #fbbf24;
+            outline-offset: 2px;
+        }
+
+        .hero-search .search-icon {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            pointer-events: none;
         }
 
         .categories {
@@ -273,6 +347,17 @@
             transform: translateY(-2px);
         }
 
+        .tool-card:focus {
+            outline: 3px solid #fbbf24;
+            outline-offset: 2px;
+            border-color: var(--primary);
+        }
+
+        .tool-card:focus-visible {
+            outline: 3px solid #fbbf24;
+            outline-offset: 2px;
+        }
+
         .tool-card h4 {
             font-size: 1rem;
             font-weight: 600;
@@ -321,23 +406,17 @@
         }
 
         @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
+            .hero h1 {
+                font-size: 2rem;
             }
 
-            .header-search {
-                max-width: 100%;
-                order: 3;
+            .hero p {
+                font-size: 1rem;
             }
 
             .nav-links {
                 gap: 1rem;
                 font-size: 0.9rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
             }
 
             .category-nav {
@@ -763,8 +842,108 @@
             line-height: 1.7;
         }
 
+        /* Age Calculator Specific Styles */
+        .age-calc-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .field-note {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: -0.25rem 0 0.5rem;
+        }
+
+        .age-display {
+            font-size: 3rem !important;
+            line-height: 1.2;
+        }
+
+        .age-detail {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .birthday-card {
+            text-align: center;
+        }
+
+        .birthday-date {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0.5rem 0;
+        }
+
+        .birthday-countdown {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .days-left {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .milestone-card {
+            text-align: center;
+        }
+
+        .milestone-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .milestone-date {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .content-section ol {
+            margin: 1rem 0 1.5rem 1.5rem;
+            line-height: 1.8;
+        }
+
         @media (max-width: 1024px) {
-            .mortgage-calc-layout {
+            .mortgage-calc-layout,
+            .age-calc-layout {
                 grid-template-columns: 1fr;
             }
 
@@ -889,14 +1068,11 @@
     </style>
 </head>
 <body>
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="container">
             <nav class="nav">
                 <div class="logo">📊 CalcHub</div>
-                <div class="header-search">
-                    <input type="text" id="searchInput" placeholder="Search calculators...">
-                    <span class="search-icon">🔍</span>
-                </div>
                 <ul class="nav-links">
                     <li><a href="#" onclick="showHome()">Home</a></li>
                     <li><a href="#">Dashboard</a></li>
@@ -929,10 +1105,41 @@
     </header>
 
     <div id="homePage">
-        <section class="hero">
+        <section class="hero" id="mainContent">
             <div class="container">
                 <h1>Find the Calculator You Need</h1>
                 <p>Browse our growing library of accurate, lightweight calculators across finance, health, productivity, and more.</p>
+                <div class="hero-search" role="search">
+                    <label for="searchInput" class="visually-hidden">Search for calculators</label>
+                    <input 
+                        type="search" 
+                        id="searchInput" 
+                        placeholder="Search calculators..."
+                        aria-label="Search for calculators"
+                        aria-describedby="searchDescription"
+                        autocomplete="off"
+                    >
+                    <span id="searchDescription" class="visually-hidden">Type to filter calculators by name or category</span>
+                    <div class="search-controls">
+                        <button 
+                            class="clear-search" 
+                            id="clearSearch" 
+                            onclick="clearSearch()"
+                            aria-label="Clear search"
+                            tabindex="-1"
+                        >
+                            Clear
+                        </button>
+                        <span class="search-icon" aria-hidden="true">🔍</span>
+                    </div>
+                    <div 
+                        id="searchResults" 
+                        class="visually-hidden" 
+                        role="status" 
+                        aria-live="polite" 
+                        aria-atomic="true"
+                    ></div>
+                </div>
             </div>
         </section>
 
@@ -1382,6 +1589,167 @@
         </div>
     </div>
 
+    <div id="ageCalc" class="calculator-page">
+        <div class="container">
+            <a href="#" class="back-btn" onclick="showHome(); return false;">← Back to Home</a>
+            <div class="age-calc-layout">
+                <div class="calc-main">
+                    <div class="calc-header">
+                        <h2>🎂 Age Calculator</h2>
+                        <p>Calculate your exact chronological age</p>
+                    </div>
+                    
+                    <form id="ageForm" onsubmit="calculateAge(event)">
+                        <div class="form-group">
+                            <label for="birthDate">Date of Birth</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ageAtDate">Age at Date (Optional)</label>
+                            <p class="field-note">Defaults to Today</p>
+                            <input type="date" id="ageAtDate">
+                        </div>
+
+                        <div class="button-row">
+                            <button type="submit" class="calculate-btn">CALCULATE AGE</button>
+                            <button type="button" class="clear-btn" onclick="resetAgeToToday()">Reset to Today</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                <div class="calc-results" id="ageResults" style="display: none;">
+                    <div class="result-card primary-result">
+                        <h3>Your Age</h3>
+                        <div class="result-value age-display" id="ageDisplay">--</div>
+                    </div>
+
+                    <div class="result-card">
+                        <h4>In Detail</h4>
+                        <div class="age-detail" id="ageDetail">Enter your birth date</div>
+                    </div>
+
+                    <div class="result-card birthday-card">
+                        <h4>Next Birthday</h4>
+                        <div class="birthday-date" id="nextBirthday">--</div>
+                        <div class="birthday-countdown" id="birthdayCountdown">--</div>
+                        <div class="days-left" id="daysLeft">days left</div>
+                    </div>
+
+                    <div class="result-card milestone-card">
+                        <h4>Next Milestone</h4>
+                        <div class="milestone-text" id="milestoneText">You will turn -- days old on:</div>
+                        <div class="milestone-date" id="milestoneDate">--</div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Weeks</div>
+                            <div class="stat-value" id="totalWeeks">--</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Days</div>
+                            <div class="stat-value" id="totalDays">--</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Hours</div>
+                            <div class="stat-value" id="totalHours">--</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Mins</div>
+                            <div class="stat-value" id="totalMins">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Educational Content -->
+            <div class="educational-content">
+                <section class="content-section">
+                    <h2>Understanding Your Age</h2>
+                    
+                    <h3>What is Chronological Age?</h3>
+                    <p>Chronological age is the exact amount of time that has passed from your birth to a given date. While it seems simple, counting it precisely involves navigating calendar quirks like <strong>Leap Years</strong> (which occur every 4 years) and varying month lengths (28, 30, or 31 days).</p>
+                    <p>This tool calculates age based on the Gregorian calendar, the most widely used civil calendar system in the world.</p>
+
+                    <h3>Why Calculate Exact Age?</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>Administrative & Legal</h4>
+                            <p>Checking eligibility for driving licenses (16+), voting (18+), or retirement benefits (65+).</p>
+                        </div>
+
+                        <div class="tip-card">
+                            <h4>Medical Metrics</h4>
+                            <p>Doctors use precise age (in months) for infant growth charts and to calculate accurate BMI percentiles.</p>
+                        </div>
+
+                        <div class="tip-card">
+                            <h4>Education & School</h4>
+                            <p>Determining school grade admission based on "age cut-off" dates (e.g., must be 5 by September 1st).</p>
+                        </div>
+
+                        <div class="tip-card">
+                            <h4>Fun & Milestones</h4>
+                            <p>Finding out exactly how many days you've been alive or planning a "10,000th Day" party.</p>
+                        </div>
+                    </div>
+
+                    <h3>The Math Behind It</h3>
+                    <p>Calculating age manually can be tricky:</p>
+                    <ol>
+                        <li>Subtract birth year from current year.</li>
+                        <li>If current month &lt; birth month, subtract 1 from years.</li>
+                        <li>If current month = birth month but current day &lt; birth day, subtract 1 from years.</li>
+                        <li>Calculate remaining months and days, adjusting for the previous month's total days (28, 30, or 31).</li>
+                    </ol>
+
+                    <h3>Did You Know?</h3>
+                    <ul>
+                        <li><strong>Time Perception:</strong> As you age, time feels faster because each year represents a smaller percentage of your life (Weber-Fechner Law).</li>
+                        <li><strong>Cell Regeneration:</strong> Your body replaces most of its cells every 7 to 10 years, meaning you are constantly "renewing."</li>
+                        <li><strong>Golden Birthdays:</strong> A "Golden Birthday" occurs when your age matches the day you were born (e.g., turning 25 on the 25th).</li>
+                    </ul>
+                </section>
+
+                <section class="content-section">
+                    <h3>Common Legal Milestones (US)</h3>
+                    <ul>
+                        <li>Driving Age (Permit): 15-16</li>
+                        <li>Voting Age: 18</li>
+                        <li>Rental Car Age: 25</li>
+                        <li>Retirement Benefits: 62-67</li>
+                    </ul>
+                </section>
+
+                <section class="faq-section">
+                    <h3>Frequently Asked Questions</h3>
+                    
+                    <div class="faq-item">
+                        <h4>Can I calculate age for a future date?</h4>
+                        <p>Yes. Changing the "Age at Date" field allows you to see how old you (or someone else) will be at a future event, like a graduation in 2030.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>What if I was born on February 29?</h4>
+                        <p>If you are a "Leapling," your birthday technically occurs only every 4 years. In non-leap years, most legal systems consider you a year older on March 1st.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Why is the total weeks count useful?</h4>
+                        <p>Viewing your life in weeks (e.g., "4,000 weeks") is a popular productivity and philosophy concept ("Memento Mori") that helps visualize time passing more concretely than years.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Does this calculate biological age?</h4>
+                        <p>No. This tool calculates chronological age (time elapsed). Biological age depends on health markers like cell regeneration, which requires medical testing.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
     <div id="tipCalc" class="calculator-page">
         <div class="container">
             <a href="#" class="back-btn" onclick="showHome(); return false;">← Back to Home</a>
@@ -1661,6 +2029,120 @@
             document.getElementById('bmiResult').classList.add('show');
         }
 
+        // Age Calculator Functions
+        function calculateAge(e) {
+            e.preventDefault();
+            
+            const birthDate = new Date(document.getElementById('birthDate').value);
+            let targetDate = document.getElementById('ageAtDate').value;
+            
+            if (!targetDate) {
+                targetDate = new Date();
+            } else {
+                targetDate = new Date(targetDate);
+            }
+            
+            if (birthDate > targetDate) {
+                alert('Birth date cannot be after the target date!');
+                return;
+            }
+            
+            // Calculate age components
+            const ageData = calculateAgeComponents(birthDate, targetDate);
+            
+            // Display main age
+            document.getElementById('ageDisplay').textContent = `${ageData.years} years ${ageData.months} months`;
+            
+            // Display detailed age
+            document.getElementById('ageDetail').textContent = 
+                `${ageData.years} years, ${ageData.months} months, and ${ageData.days} days old`;
+            
+            // Calculate and display next birthday
+            const nextBirthday = new Date(targetDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+            if (nextBirthday <= targetDate) {
+                nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
+            }
+            
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            
+            document.getElementById('nextBirthday').textContent = 
+                `${dayNames[nextBirthday.getDay()]}, ${monthNames[nextBirthday.getMonth()]} ${nextBirthday.getDate()}, ${nextBirthday.getFullYear()}`;
+            
+            const daysToNextBirthday = Math.floor((nextBirthday - targetDate) / (1000 * 60 * 60 * 24));
+            document.getElementById('birthdayCountdown').textContent = daysToNextBirthday;
+            document.getElementById('daysLeft').textContent = daysToNextBirthday === 1 ? 'day left' : 'days left';
+            
+            // Calculate milestone
+            const totalDays = ageData.totalDays;
+            const milestones = [1000, 2000, 3000, 5000, 7500, 10000, 15000, 20000, 25000, 30000];
+            let nextMilestone = milestones.find(m => m > totalDays) || (Math.ceil(totalDays / 5000) * 5000);
+            
+            const daysToMilestone = nextMilestone - totalDays;
+            const milestoneDate = new Date(targetDate);
+            milestoneDate.setDate(milestoneDate.getDate() + daysToMilestone);
+            
+            document.getElementById('milestoneText').textContent = 
+                `You will turn ${nextMilestone.toLocaleString()} days old on:`;
+            document.getElementById('milestoneDate').textContent = 
+                `${monthNames[milestoneDate.getMonth()]} ${milestoneDate.getDate()}, ${milestoneDate.getFullYear()}`;
+            
+            // Display totals
+            document.getElementById('totalWeeks').textContent = 
+                Math.floor(ageData.totalDays / 7).toLocaleString();
+            document.getElementById('totalDays').textContent = 
+                ageData.totalDays.toLocaleString();
+            document.getElementById('totalHours').textContent = 
+                (ageData.totalDays * 24).toLocaleString();
+            document.getElementById('totalMins').textContent = 
+                (ageData.totalDays * 24 * 60).toLocaleString();
+            
+            // Show results
+            document.getElementById('ageResults').style.display = 'block';
+        }
+
+        function calculateAgeComponents(birthDate, targetDate) {
+            let years = targetDate.getFullYear() - birthDate.getFullYear();
+            let months = targetDate.getMonth() - birthDate.getMonth();
+            let days = targetDate.getDate() - birthDate.getDate();
+            
+            // Adjust for negative days
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            
+            // Adjust for negative months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Calculate total days
+            const totalDays = Math.floor((targetDate - birthDate) / (1000 * 60 * 60 * 24));
+            
+            return { years, months, days, totalDays };
+        }
+
+        function resetAgeToToday() {
+            document.getElementById('ageAtDate').value = '';
+            const birthDate = document.getElementById('birthDate').value;
+            if (birthDate) {
+                calculateAge({ preventDefault: () => {} });
+            }
+        }
+
+        // Set today's date as default for age calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const ageAtDateInput = document.getElementById('ageAtDate');
+            if (ageAtDateInput) {
+                ageAtDateInput.setAttribute('max', today);
+            }
+        });
+
         function calculateTip(e) {
             e.preventDefault();
             
@@ -1679,20 +2161,96 @@
             document.getElementById('tipResult').classList.add('show');
         }
 
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function(e) {
+        // Search functionality with accessibility
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearch');
+        const searchResults = document.getElementById('searchResults');
+        
+        searchInput.addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const toolCards = document.querySelectorAll('.tool-card');
+            let visibleCount = 0;
             
+            // Filter tool cards
             toolCards.forEach(card => {
                 const text = card.textContent.toLowerCase();
                 if (text.includes(searchTerm)) {
                     card.style.display = 'block';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+            
+            // Show/hide clear button and update tabindex
+            if (searchTerm.length > 0) {
+                clearSearchBtn.classList.add('visible');
+                clearSearchBtn.setAttribute('tabindex', '0');
+                
+                // Announce results to screen readers
+                if (visibleCount === 0) {
+                    searchResults.textContent = 'No calculators found. Try a different search term.';
+                } else if (visibleCount === 1) {
+                    searchResults.textContent = '1 calculator found.';
+                } else {
+                    searchResults.textContent = visibleCount + ' calculators found.';
+                }
+            } else {
+                clearSearchBtn.classList.remove('visible');
+                clearSearchBtn.setAttribute('tabindex', '-1');
+                searchResults.textContent = '';
+            }
         });
+
+        // Handle Enter key on search input
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // Focus on first visible calculator
+                const firstVisible = document.querySelector('.tool-card[style="display: block;"], .tool-card:not([style*="display: none"])');
+                if (firstVisible) {
+                    firstVisible.focus();
+                }
+            }
+            
+            // Handle Escape key to clear search
+            if (e.key === 'Escape') {
+                clearSearch();
+            }
+        });
+
+        // Handle keyboard on clear button
+        clearSearchBtn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                clearSearch();
+            }
+        });
+
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearch');
+            const searchResults = document.getElementById('searchResults');
+            const toolCards = document.querySelectorAll('.tool-card');
+            
+            // Clear input
+            searchInput.value = '';
+            
+            // Hide clear button
+            clearSearchBtn.classList.remove('visible');
+            clearSearchBtn.setAttribute('tabindex', '-1');
+            
+            // Clear screen reader announcement
+            searchResults.textContent = 'Search cleared. All calculators are now visible.';
+            
+            // Show all tool cards
+            toolCards.forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            // Focus back on search input
+            searchInput.focus();
+        }
     </script>
 </body>
 </html>
