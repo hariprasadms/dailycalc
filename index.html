@@ -29,6 +29,28 @@
             background-color: var(--background);
             color: var(--text-primary);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Touch-friendly: Ensure minimum tap target size */
+        button,
+        a,
+        input[type="submit"],
+        .tool-card,
+        .category-nav-item {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Touch-friendly: Remove tap highlight on mobile */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
 
         /* Accessibility: Visually hidden but screen reader accessible */
@@ -64,6 +86,9 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .container {
@@ -329,6 +354,18 @@
             gap: 1rem;
         }
 
+        @media (max-width: 768px) {
+            .tool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .tool-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -430,6 +467,195 @@
 
             .category-grid, .tool-grid {
                 grid-template-columns: 1fr;
+            }
+
+            /* Mobile: Stack form and results */
+            .mortgage-calc-layout,
+            .age-calc-layout {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            /* Adjust form layouts for mobile */
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            /* Mobile: Reduce padding */
+            .calc-main,
+            .calc-results {
+                padding: 1.5rem;
+            }
+
+            .educational-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .calculator-page {
+                padding: 2rem 0;
+            }
+
+            /* Mobile: Adjust result cards */
+            .result-card {
+                padding: 1rem;
+            }
+
+            .result-value {
+                font-size: 1.8rem;
+            }
+
+            .age-display {
+                font-size: 2rem !important;
+            }
+
+            /* Mobile: Stats grid */
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            /* Mobile: Tips grid */
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Mobile: Table scrolling */
+            .schedule-table-wrapper {
+                max-height: 400px;
+            }
+
+            /* Mobile: Reduce text sizes */
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .content-section h3 {
+                font-size: 1.2rem;
+            }
+
+            /* Mobile: Input adjustments */
+            .input-with-prefix input,
+            .input-with-suffix input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .hero-search input {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 0.875rem 7rem 0.875rem 1.25rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            /* Mobile: Button sizing */
+            .button-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .calculate-btn,
+            .clear-btn {
+                width: 100%;
+            }
+
+            /* Mobile: Birthday and milestone cards */
+            .birthday-date {
+                font-size: 1.2rem;
+            }
+
+            .birthday-countdown {
+                font-size: 1.8rem;
+            }
+
+            .milestone-date {
+                font-size: 1.1rem;
+            }
+
+            /* Mobile: Section headers */
+            .section-header h3 {
+                font-size: 0.9rem;
+            }
+
+            /* Mobile: Date inputs */
+            .date-inputs {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra small screens */
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 2rem 0 2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .nav-links {
+                gap: 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            /* Hide category text on very small screens, keep icons */
+            .category-nav-item span:not(.category-icon-small) {
+                display: none;
+            }
+
+            .category-nav-item {
+                padding: 0.5rem;
+                min-width: 44px;
+            }
+
+            .result-value {
+                font-size: 1.5rem;
+            }
+
+            .age-display {
+                font-size: 1.8rem !important;
+            }
+
+            .stat-value {
+                font-size: 1.3rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+
+            .content-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .result-card.primary-result .result-value {
+                font-size: 2rem;
+            }
+
+            /* Extra small: Search bar */
+            .hero-search input {
+                padding: 0.75rem 6rem 0.75rem 1rem;
+            }
+
+            .hero-search .clear-search {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.75rem;
             }
         }
 
@@ -719,6 +945,26 @@
             overflow-x: auto;
             max-height: 500px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 8px;
+        }
+
+        .schedule-table-wrapper::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+
+        .schedule-table-wrapper::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+
+        .schedule-table-wrapper::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .schedule-table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
         }
 
         .schedule-table {
