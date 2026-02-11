@@ -154,11 +154,17 @@
             text-decoration: none;
             transition: all 0.3s;
             font-weight: 500;
+            cursor: pointer;
         }
 
         .category-nav-item:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
+        }
+
+        .category-nav-item.active {
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .category-icon-small {
@@ -352,6 +358,40 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
+            min-height: 200px;
+            position: relative;
+        }
+
+        .empty-state {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-secondary);
+            width: 100%;
+            padding: 2rem;
+            display: none;
+        }
+
+        .empty-state.show {
+            display: block;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
         }
 
         @media (max-width: 768px) {
@@ -376,6 +416,22 @@
             cursor: pointer;
             text-decoration: none;
             color: var(--text-primary);
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card.hidden {
+            display: none;
         }
 
         .tool-card:hover {
@@ -1187,6 +1243,177 @@
             line-height: 1.8;
         }
 
+        /* Percentage Calculator Specific Styles */
+        .percentage-calc-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .percentage-calc-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .percentage-calc-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .percentage-calc-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .inline-input {
+            width: 100px;
+            padding: 0.5rem 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            background: var(--background);
+        }
+
+        .inline-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .inline-input:hover {
+            border-color: var(--primary);
+        }
+
+        .calc-inline-btn {
+            padding: 0.75rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .calc-inline-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .calc-inline-btn:active {
+            transform: translateY(0);
+        }
+
+        .inline-result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .result-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .result-number.increase {
+            color: #16a34a;
+        }
+
+        .result-number.decrease {
+            color: #dc2626;
+        }
+
+        .calc-explanation {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .tip-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--background);
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .percentage-calc-card {
+                padding: 1.5rem;
+            }
+
+            .percentage-calc-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .inline-input {
+                width: 80px;
+                font-size: 1rem;
+                padding: 0.4rem 0.5rem;
+            }
+
+            .result-number {
+                font-size: 1.5rem;
+            }
+
+            .inline-result {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .percentage-calc-card h3 {
+                font-size: 1rem;
+            }
+
+            .inline-input {
+                width: 70px;
+                font-size: 0.95rem;
+            }
+
+            .result-number {
+                font-size: 1.3rem;
+            }
+
+            .calc-inline-btn {
+                width: 100%;
+                padding: 0.875rem;
+            }
+        }
+
         @media (max-width: 1024px) {
             .mortgage-calc-layout,
             .age-calc-layout {
@@ -1329,19 +1556,23 @@
         <div class="category-menu">
             <div class="container">
                 <div class="category-nav">
-                    <a href="#finance" class="category-nav-item">
+                    <a href="#" class="category-nav-item active" data-category="all" onclick="filterCategory('all'); return false;">
+                        <span class="category-icon-small">📱</span>
+                        <span>All</span>
+                    </a>
+                    <a href="#" class="category-nav-item" data-category="finance" onclick="filterCategory('finance'); return false;">
                         <span class="category-icon-small">💰</span>
                         <span>Finance</span>
                     </a>
-                    <a href="#health" class="category-nav-item">
+                    <a href="#" class="category-nav-item" data-category="health" onclick="filterCategory('health'); return false;">
                         <span class="category-icon-small">❤️</span>
                         <span>Health</span>
                     </a>
-                    <a href="#everyday" class="category-nav-item">
+                    <a href="#" class="category-nav-item" data-category="everyday" onclick="filterCategory('everyday'); return false;">
                         <span class="category-icon-small">📅</span>
                         <span>Everyday Life</span>
                     </a>
-                    <a href="#converters" class="category-nav-item">
+                    <a href="#" class="category-nav-item" data-category="converters" onclick="filterCategory('converters'); return false;">
                         <span class="category-icon-small">🔄</span>
                         <span>Converters</span>
                     </a>
@@ -1393,30 +1624,35 @@
             <div class="container">
                 <h2 class="section-title">Popular Tools</h2>
                 <div class="tool-grid" id="toolGrid">
-                    <a href="#" class="tool-card" onclick="showCalculator('mortgage'); return false;">
+                    <a href="#" class="tool-card" data-category="finance" onclick="showCalculator('mortgage'); return false;">
                         <h4>🏠 Mortgage Calculator</h4>
                     </a>
-                    <a href="#" class="tool-card" onclick="showCalculator('bmi'); return false;">
+                    <a href="#" class="tool-card" data-category="health" onclick="showCalculator('bmi'); return false;">
                         <h4>⚖️ BMI Calculator</h4>
                     </a>
-                    <a href="#" class="tool-card" onclick="showCalculator('age'); return false;">
+                    <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('age'); return false;">
                         <h4>🎂 Age Calculator</h4>
                     </a>
-                    <a href="#" class="tool-card" onclick="showCalculator('loan'); return false;">
+                    <a href="#" class="tool-card" data-category="finance" onclick="showCalculator('loan'); return false;">
                         <h4>💳 Loan Calculator</h4>
                     </a>
-                    <a href="#" class="tool-card" onclick="showCalculator('tip'); return false;">
+                    <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('tip'); return false;">
                         <h4>💵 Tip Calculator</h4>
                     </a>
-                    <a href="#" class="tool-card" onclick="showCalculator('percentage'); return false;">
+                    <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('percentage'); return false;">
                         <h4>📊 Percentage Calculator</h4>
                     </a>
-                    <a href="#" class="tool-card" onclick="showCalculator('discount'); return false;">
+                    <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('discount'); return false;">
                         <h4>🏷️ Discount Calculator</h4>
                     </a>
-                    <a href="#" class="tool-card" onclick="showCalculator('calorie'); return false;">
+                    <a href="#" class="tool-card" data-category="health" onclick="showCalculator('calorie'); return false;">
                         <h4>🍎 Calorie Calculator</h4>
                     </a>
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-state-icon">🔍</div>
+                        <h3>No calculators found</h3>
+                        <p>Try selecting a different category or adjusting your search.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2037,6 +2273,92 @@
         </div>
     </div>
 
+    <div id="percentageCalc" class="calculator-page">
+        <div class="container">
+            <a href="#" class="back-btn" onclick="showHome(); return false;">← Back to Home</a>
+            <div class="percentage-calc-container">
+                <div class="calc-header">
+                    <h2>📊 Percentage Calculator</h2>
+                    <p>Calculate percentages quickly and easily for a variety of purposes</p>
+                </div>
+
+                <!-- Calculator 1: What is X% of Y? -->
+                <div class="percentage-calc-card">
+                    <h3>What is <input type="number" id="percent1" class="inline-input" value="10" min="0" step="0.01"> % of <input type="number" id="value1" class="inline-input" value="100" min="0" step="0.01"> ?</h3>
+                    <button onclick="calculateType1()" class="calc-inline-btn">Calculate</button>
+                    <div class="inline-result" id="result1">
+                        <span class="result-label">Answer:</span>
+                        <span class="result-number">10</span>
+                    </div>
+                    <p class="calc-explanation">Example: 10% of 100 is 10</p>
+                </div>
+
+                <!-- Calculator 2: X is what percent of Y? -->
+                <div class="percentage-calc-card">
+                    <h3><input type="number" id="value2a" class="inline-input" value="10" min="0" step="0.01"> is what percent of <input type="number" id="value2b" class="inline-input" value="100" min="0" step="0.01"> ?</h3>
+                    <button onclick="calculateType2()" class="calc-inline-btn">Calculate</button>
+                    <div class="inline-result" id="result2">
+                        <span class="result-label">Answer:</span>
+                        <span class="result-number">10 %</span>
+                    </div>
+                    <p class="calc-explanation">Example: 10 is 10% of 100</p>
+                </div>
+
+                <!-- Calculator 3: Percentage increase/decrease -->
+                <div class="percentage-calc-card">
+                    <h3>What is the percentage increase/decrease from <input type="number" id="value3a" class="inline-input" value="100" step="0.01"> to <input type="number" id="value3b" class="inline-input" value="120" step="0.01"> ?</h3>
+                    <button onclick="calculateType3()" class="calc-inline-btn">Calculate</button>
+                    <div class="inline-result" id="result3">
+                        <span class="result-label">Answer:</span>
+                        <span class="result-number increase">20% increase</span>
+                    </div>
+                    <p class="calc-explanation">Example: From 100 to 120 is a 20% increase</p>
+                </div>
+
+                <p class="tip-text"><strong>Tips:</strong> Use tab to move to the next field. Use shift-tab to move to the previous field. Press enter to calculate.</p>
+            </div>
+
+            <!-- Educational Content -->
+            <div class="educational-content">
+                <section class="content-section">
+                    <h2>About</h2>
+                    <p>This calculator is designed to help you quickly and easily calculate percentages for a variety of purposes. Whether you're calculating discounts, calculating tips, or trying to figure out how much something has increased or decreased in value, our percentage calculator can help.</p>
+
+                    <h3>What is a percentage?</h3>
+                    <p>Percentage is a way of expressing a number as a fraction of 100. It is commonly used to represent a portion of a whole or to compare two numbers. Percentages are often denoted with the symbol "%". For example, if there are 100 cars in a garage and 25 of them are white, we could say that 25% of the cars in the garage are white.</p>
+
+                    <h3>How do you calculate a percentage?</h3>
+                    <p>To calculate a percentage, you typically divide the part (the smaller value) by the whole (the larger value), and then multiply the result by 100. This gives you the percentage value as a number between 0 and 100. For example, if you have 50 apples and you want to know what percentage of them are red, and 20 of them are red, you would divide 20 by 50 to get 0.4, then multiply by 100 to get 40%.</p>
+
+                    <h3>Why percentages matter?</h3>
+                    <p>Percentages are used in a wide variety of contexts, from calculating discounts and taxes to measuring changes in stock prices and economic indicators. Understanding how percentages work can help you make more informed decisions in a variety of areas, from personal finance to business management.</p>
+                </section>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>Common Uses</h4>
+                        <ul>
+                            <li>Calculating discounts and sales</li>
+                            <li>Computing taxes and tips</li>
+                            <li>Measuring test scores and grades</li>
+                            <li>Tracking financial growth</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>Quick Examples</h4>
+                        <ul>
+                            <li>20% off $50 = $10 discount</li>
+                            <li>15% tip on $80 = $12</li>
+                            <li>80/100 correct = 80% score</li>
+                            <li>From $100 to $150 = 50% increase</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 CalcHub. All rights reserved. | Your data stays private, always.</p>
@@ -2065,6 +2387,77 @@
                 calcPage.classList.add('active');
             }
             window.scrollTo(0, 0);
+        }
+
+        // Category filtering functionality
+        let currentCategory = 'all';
+
+        function filterCategory(category) {
+            currentCategory = category;
+            const toolCards = document.querySelectorAll('.tool-card');
+            const categoryItems = document.querySelectorAll('.category-nav-item');
+            const emptyState = document.getElementById('emptyState');
+            let visibleCount = 0;
+            
+            // Update active state on category items
+            categoryItems.forEach(item => {
+                if (item.dataset.category === category) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Filter tool cards with animation
+            toolCards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                
+                if (category === 'all' || cardCategory === category) {
+                    card.classList.remove('hidden');
+                    card.style.display = 'block';
+                    visibleCount++;
+                    // Trigger reflow for animation
+                    card.style.animation = 'none';
+                    setTimeout(() => {
+                        card.style.animation = '';
+                    }, 10);
+                } else {
+                    card.classList.add('hidden');
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide empty state
+            if (visibleCount === 0) {
+                emptyState.classList.add('show');
+            } else {
+                emptyState.classList.remove('show');
+            }
+
+            // Update section title
+            updateSectionTitle(category);
+            
+            // Clear search when switching categories
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && searchInput.value) {
+                searchInput.value = '';
+                document.getElementById('clearSearch').classList.remove('visible');
+            }
+        }
+
+        function updateSectionTitle(category) {
+            const sectionTitle = document.querySelector('.popular-tools .section-title');
+            const categoryNames = {
+                'all': 'Popular Tools',
+                'finance': 'Finance Calculators',
+                'health': 'Health Calculators',
+                'everyday': 'Everyday Life Calculators',
+                'converters': 'Converter Tools'
+            };
+            
+            if (sectionTitle) {
+                sectionTitle.textContent = categoryNames[category] || 'Popular Tools';
+            }
         }
 
         // Calculator functions
@@ -2407,6 +2800,121 @@
             document.getElementById('tipResult').classList.add('show');
         }
 
+        // Percentage Calculator Functions
+        function calculateType1() {
+            const percent = parseFloat(document.getElementById('percent1').value) || 0;
+            const value = parseFloat(document.getElementById('value1').value) || 0;
+            const result = (percent / 100) * value;
+            
+            document.querySelector('#result1 .result-number').textContent = result.toFixed(2);
+        }
+
+        function calculateType2() {
+            const value1 = parseFloat(document.getElementById('value2a').value) || 0;
+            const value2 = parseFloat(document.getElementById('value2b').value) || 0;
+            
+            if (value2 === 0) {
+                document.querySelector('#result2 .result-number').textContent = '0 %';
+                return;
+            }
+            
+            const result = (value1 / value2) * 100;
+            document.querySelector('#result2 .result-number').textContent = result.toFixed(2) + ' %';
+        }
+
+        function calculateType3() {
+            const value1 = parseFloat(document.getElementById('value3a').value) || 0;
+            const value2 = parseFloat(document.getElementById('value3b').value) || 0;
+            
+            if (value1 === 0) {
+                document.querySelector('#result3 .result-number').textContent = '0%';
+                return;
+            }
+            
+            const change = value2 - value1;
+            const percentChange = (change / value1) * 100;
+            const resultElement = document.querySelector('#result3 .result-number');
+            
+            if (percentChange > 0) {
+                resultElement.textContent = percentChange.toFixed(2) + '% increase';
+                resultElement.className = 'result-number increase';
+            } else if (percentChange < 0) {
+                resultElement.textContent = Math.abs(percentChange).toFixed(2) + '% decrease';
+                resultElement.className = 'result-number decrease';
+            } else {
+                resultElement.textContent = '0% (no change)';
+                resultElement.className = 'result-number';
+            }
+        }
+
+        // Auto-calculate on input change for percentage calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            // Type 1 calculator
+            const percent1 = document.getElementById('percent1');
+            const value1 = document.getElementById('value1');
+            if (percent1 && value1) {
+                percent1.addEventListener('input', calculateType1);
+                value1.addEventListener('input', calculateType1);
+                percent1.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        calculateType1();
+                    }
+                });
+                value1.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        calculateType1();
+                    }
+                });
+            }
+
+            // Type 2 calculator
+            const value2a = document.getElementById('value2a');
+            const value2b = document.getElementById('value2b');
+            if (value2a && value2b) {
+                value2a.addEventListener('input', calculateType2);
+                value2b.addEventListener('input', calculateType2);
+                value2a.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        calculateType2();
+                    }
+                });
+                value2b.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        calculateType2();
+                    }
+                });
+            }
+
+            // Type 3 calculator
+            const value3a = document.getElementById('value3a');
+            const value3b = document.getElementById('value3b');
+            if (value3a && value3b) {
+                value3a.addEventListener('input', calculateType3);
+                value3b.addEventListener('input', calculateType3);
+                value3a.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        calculateType3();
+                    }
+                });
+                value3b.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        calculateType3();
+                    }
+                });
+            }
+
+            // Initial calculations
+            if (percent1 && value1) calculateType1();
+            if (value2a && value2b) calculateType2();
+            if (value3a && value3b) calculateType3();
+        });
+
         // Search functionality with accessibility
         const searchInput = document.getElementById('searchInput');
         const clearSearchBtn = document.getElementById('clearSearch');
@@ -2417,10 +2925,15 @@
             const toolCards = document.querySelectorAll('.tool-card');
             let visibleCount = 0;
             
-            // Filter tool cards
+            // Filter tool cards by search term and current category
             toolCards.forEach(card => {
                 const text = card.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
+                const cardCategory = card.dataset.category;
+                const matchesSearch = text.includes(searchTerm);
+                const matchesCategory = currentCategory === 'all' || cardCategory === currentCategory;
+                
+                if (matchesSearch && matchesCategory) {
+                    card.classList.remove('hidden');
                     card.style.display = 'block';
                     visibleCount++;
                 } else {
@@ -2453,7 +2966,7 @@
             if (e.key === 'Enter') {
                 e.preventDefault();
                 // Focus on first visible calculator
-                const firstVisible = document.querySelector('.tool-card[style="display: block;"], .tool-card:not([style*="display: none"])');
+                const firstVisible = document.querySelector('.tool-card[style="display: block;"], .tool-card:not([style*="display: none"]):not(.hidden)');
                 if (firstVisible) {
                     firstVisible.focus();
                 }
@@ -2487,11 +3000,19 @@
             clearSearchBtn.setAttribute('tabindex', '-1');
             
             // Clear screen reader announcement
-            searchResults.textContent = 'Search cleared. All calculators are now visible.';
+            searchResults.textContent = 'Search cleared. All calculators in the current category are now visible.';
             
-            // Show all tool cards
+            // Show all tool cards based on current category filter
             toolCards.forEach(card => {
-                card.style.display = 'block';
+                const cardCategory = card.dataset.category;
+                const matchesCategory = currentCategory === 'all' || cardCategory === currentCategory;
+                
+                if (matchesCategory) {
+                    card.classList.remove('hidden');
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
             });
             
             // Focus back on search input
