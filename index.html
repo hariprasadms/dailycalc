@@ -1565,6 +1565,130 @@
             line-height: 1.8;
         }
 
+        /* Favorites Page Styles */
+        .favorites-header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+
+        .favorites-header h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .favorites-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-favorites {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .empty-favorites.show {
+            display: block;
+        }
+
+        .empty-favorites-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.4;
+        }
+
+        .empty-favorites h3 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .empty-favorites p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        /* Favorite Button Styles */
+        .favorite-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .favorite-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .favorite-btn.favorited {
+            background: var(--primary);
+            color: white;
+        }
+
+        .favorite-btn .star-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .favorite-btn.favorited .star-icon {
+            animation: starPop 0.3s ease;
+        }
+
+        @keyframes starPop {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        .remove-favorite {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .remove-favorite:hover {
+            background: rgba(220, 38, 38, 1);
+            transform: scale(1.1);
+        }
+
+        .tool-card.favorite {
+            position: relative;
+        }
+
         /* Calculator Not Found Page Styles */
         .not-found-container {
             max-width: 800px;
@@ -2037,9 +2161,9 @@
                     <span></span>
                 </button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#" onclick="showHome(); closeMenu();">Home</a></li>
+                    <li><a href="#" onclick="showHome(); closeMenu(); return false;">Home</a></li>
                     <li><a href="#" onclick="closeMenu();">Dashboard</a></li>
-                    <li><a href="#" onclick="closeMenu();">Favorites</a></li>
+                    <li><a href="#" onclick="showFavorites(); closeMenu(); return false;">Favorites</a></li>
                 </ul>
             </nav>
         </div>
@@ -2198,6 +2322,10 @@
                     <div class="calc-header">
                         <h2>🏠 Mortgage Calculator Fixed-Rate</h2>
                         <p>Modify the values and see the instant mortgage results</p>
+                        <button class="favorite-btn" id="favBtn-mortgage" onclick="toggleFavorite('mortgage', '🏠 Mortgage Calculator')">
+                            <span class="star-icon">☆</span>
+                            <span class="fav-text">Add to Favorites</span>
+                        </button>
                     </div>
                     
                     <form id="mortgageForm" onsubmit="calculateMortgage(event)">
@@ -2544,6 +2672,10 @@
                 <div class="calc-header">
                     <h2>⚖️ BMI Calculator</h2>
                     <p>Calculate your Body Mass Index and health category.</p>
+                    <button class="favorite-btn" id="favBtn-bmi" onclick="toggleFavorite('bmi', '⚖️ BMI Calculator')">
+                        <span class="star-icon">☆</span>
+                        <span class="fav-text">Add to Favorites</span>
+                    </button>
                 </div>
                 <form onsubmit="calculateBMI(event)">
                     <div class="form-group">
@@ -2578,6 +2710,10 @@
                     <div class="calc-header">
                         <h2>🎂 Age Calculator</h2>
                         <p>Calculate your exact chronological age</p>
+                        <button class="favorite-btn" id="favBtn-age" onclick="toggleFavorite('age', '🎂 Age Calculator')">
+                            <span class="star-icon">☆</span>
+                            <span class="fav-text">Add to Favorites</span>
+                        </button>
                     </div>
                     
                     <form id="ageForm" onsubmit="calculateAge(event)">
@@ -2738,6 +2874,10 @@
                 <div class="calc-header">
                     <h2>💵 Tip Calculator</h2>
                     <p>Calculate tip and split the bill easily.</p>
+                    <button class="favorite-btn" id="favBtn-tip" onclick="toggleFavorite('tip', '💵 Tip Calculator')">
+                        <span class="star-icon">☆</span>
+                        <span class="fav-text">Add to Favorites</span>
+                    </button>
                 </div>
                 <form onsubmit="calculateTip(event)">
                     <div class="form-group">
@@ -2779,6 +2919,10 @@
                 <div class="calc-header">
                     <h2>📊 Percentage Calculator</h2>
                     <p>Calculate percentages quickly and easily for a variety of purposes</p>
+                    <button class="favorite-btn" id="favBtn-percentage" onclick="toggleFavorite('percentage', '📊 Percentage Calculator')">
+                        <span class="star-icon">☆</span>
+                        <span class="fav-text">Add to Favorites</span>
+                    </button>
                 </div>
 
                 <!-- Calculator 1: What is X% of Y? -->
@@ -2858,6 +3002,24 @@
         </div>
     </div>
 
+    <div id="favoritesPage" class="calculator-page">
+        <div class="container">
+            <div class="favorites-header">
+                <h2>⭐ My Favorite Calculators</h2>
+                <p>Quick access to your most-used calculators</p>
+            </div>
+            <div id="favoritesGrid" class="tool-grid">
+                <!-- Favorites will be dynamically inserted here -->
+            </div>
+            <div id="emptyFavorites" class="empty-favorites">
+                <div class="empty-favorites-icon">⭐</div>
+                <h3>No Favorites Yet</h3>
+                <p>Add calculators to your favorites for quick access.<br>Click the "Add to Favorites" button on any calculator page.</p>
+                <button class="home-btn" onclick="showHome()">Browse Calculators</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <p><a href="https://hariprasadms.github.io/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; opacity: 0.9;">hariprasadms.github.io</a> © 2026 CalcHub. All rights reserved. | Your data stays private, always.</p>
@@ -2868,6 +3030,7 @@
         // Navigation functions
         function showHome() {
             document.getElementById('homePage').style.display = 'block';
+            document.getElementById('favoritesPage').style.display = 'none';
             document.querySelectorAll('.calculator-page').forEach(page => {
                 page.classList.remove('active');
             });
@@ -2880,6 +3043,130 @@
             
             window.scrollTo(0, 0);
         }
+
+        function showFavorites() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('favoritesPage').style.display = 'block';
+            document.querySelectorAll('.calculator-page').forEach(page => {
+                if (page.id !== 'favoritesPage') {
+                    page.classList.remove('active');
+                }
+            });
+            
+            // Hide category menu on favorites page
+            const categoryMenu = document.querySelector('.category-menu');
+            if (categoryMenu) {
+                categoryMenu.classList.add('hidden');
+            }
+            
+            // Load and display favorites
+            loadFavorites();
+            window.scrollTo(0, 0);
+        }
+
+        // Favorites Management
+        const FAVORITES_KEY = 'calchub_favorites';
+
+        function getFavorites() {
+            const favorites = localStorage.getItem(FAVORITES_KEY);
+            return favorites ? JSON.parse(favorites) : [];
+        }
+
+        function saveFavorites(favorites) {
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+        }
+
+        function toggleFavorite(calcId, calcName) {
+            const favorites = getFavorites();
+            const index = favorites.findIndex(fav => fav.id === calcId);
+            const btn = document.getElementById(`favBtn-${calcId}`);
+            
+            if (index > -1) {
+                // Remove from favorites
+                favorites.splice(index, 1);
+                btn.classList.remove('favorited');
+                btn.querySelector('.star-icon').textContent = '☆';
+                btn.querySelector('.fav-text').textContent = 'Add to Favorites';
+            } else {
+                // Add to favorites
+                favorites.push({ id: calcId, name: calcName, addedAt: Date.now() });
+                btn.classList.add('favorited');
+                btn.querySelector('.star-icon').textContent = '★';
+                btn.querySelector('.fav-text').textContent = 'Remove from Favorites';
+            }
+            
+            saveFavorites(favorites);
+        }
+
+        function removeFavorite(calcId) {
+            const favorites = getFavorites();
+            const filtered = favorites.filter(fav => fav.id !== calcId);
+            saveFavorites(filtered);
+            loadFavorites();
+            
+            // Update button state if on that calculator page
+            const btn = document.getElementById(`favBtn-${calcId}`);
+            if (btn) {
+                btn.classList.remove('favorited');
+                btn.querySelector('.star-icon').textContent = '☆';
+                btn.querySelector('.fav-text').textContent = 'Add to Favorites';
+            }
+        }
+
+        function loadFavorites() {
+            const favorites = getFavorites();
+            const grid = document.getElementById('favoritesGrid');
+            const emptyState = document.getElementById('emptyFavorites');
+            
+            if (favorites.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.add('show');
+            } else {
+                emptyState.classList.remove('show');
+                
+                // Map calculator IDs to their display info
+                const calcInfo = {
+                    'mortgage': { icon: '🏠', name: 'Mortgage Calculator' },
+                    'bmi': { icon: '⚖️', name: 'BMI Calculator' },
+                    'age': { icon: '🎂', name: 'Age Calculator' },
+                    'loan': { icon: '💳', name: 'Loan Calculator' },
+                    'tip': { icon: '💵', name: 'Tip Calculator' },
+                    'percentage': { icon: '📊', name: 'Percentage Calculator' },
+                    'discount': { icon: '🏷️', name: 'Discount Calculator' },
+                    'calorie': { icon: '🍎', name: 'Calorie Calculator' }
+                };
+                
+                grid.innerHTML = favorites.map(fav => {
+                    const info = calcInfo[fav.id] || { icon: '📱', name: fav.name };
+                    return `
+                        <a href="#" class="tool-card favorite" onclick="showCalculator('${fav.id}'); return false;">
+                            <button class="remove-favorite" onclick="event.preventDefault(); event.stopPropagation(); removeFavorite('${fav.id}');" title="Remove from favorites">
+                                ✕
+                            </button>
+                            <span class="tool-icon">${info.icon}</span>
+                            <h4><span class="tool-title">${info.name}</span></h4>
+                        </a>
+                    `;
+                }).join('');
+            }
+        }
+
+        function updateFavoriteButtons() {
+            const favorites = getFavorites();
+            favorites.forEach(fav => {
+                const btn = document.getElementById(`favBtn-${fav.id}`);
+                if (btn) {
+                    btn.classList.add('favorited');
+                    btn.querySelector('.star-icon').textContent = '★';
+                    btn.querySelector('.fav-text').textContent = 'Remove from Favorites';
+                }
+            });
+        }
+
+        // Initialize favorites on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFavoriteButtons();
+        });
 
         // Mobile menu toggle
         function toggleMenu() {
@@ -2920,6 +3207,7 @@
 
         function showCalculator(calcType) {
             document.getElementById('homePage').style.display = 'none';
+            document.getElementById('favoritesPage').style.display = 'none';
             document.querySelectorAll('.calculator-page').forEach(page => {
                 page.classList.remove('active');
             });
