@@ -88,7 +88,7 @@
             box-shadow: var(--shadow-lg);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .container {
@@ -102,6 +102,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            position: relative;
         }
 
         .logo {
@@ -109,6 +110,15 @@
             font-weight: 700;
             letter-spacing: -0.5px;
             flex-shrink: 0;
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.2s;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .logo:hover {
+            opacity: 0.9;
         }
 
         .nav-links {
@@ -130,9 +140,85 @@
             opacity: 1;
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+            background: transparent;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 280px;
+                height: calc(100vh - 70px);
+                background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+                flex-direction: column;
+                gap: 0;
+                padding: 2rem 0;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                width: 100%;
+                padding: 1rem 2rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
         .category-menu {
             background: rgba(255, 255, 255, 0.1);
             border-top: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 70px;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .category-menu.hidden {
+            display: none;
         }
 
         .category-nav {
@@ -171,6 +257,36 @@
             font-size: 1.2rem;
         }
 
+        @media (max-width: 768px) {
+            .category-menu {
+                top: 64px;
+            }
+
+            .category-nav {
+                gap: 0.5rem;
+            }
+
+            .category-nav-item {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-nav-item span:not(.category-icon-small) {
+                display: none;
+            }
+
+            .category-nav-item {
+                padding: 0.5rem;
+                min-width: 44px;
+            }
+        }
+
+        .category-icon-small {
+            font-size: 1.2rem;
+        }
+
         .hero {
             text-align: center;
             padding: 3rem 0 2.5rem;
@@ -199,12 +315,37 @@
 
         .hero-search input {
             width: 100%;
-            padding: 1rem 7rem 1rem 1.5rem;
+            padding: 1rem 3rem 1rem 1.5rem;
             border: none;
             border-radius: 50px;
             font-size: 1rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
+        }
+
+        /* Hide native search input clear button */
+        .hero-search input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .hero-search input[type="search"]::-webkit-search-decoration,
+        .hero-search input[type="search"]::-webkit-search-results-button,
+        .hero-search input[type="search"]::-webkit-search-results-decoration {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .hero-search input[type="search"]::-ms-clear {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .hero-search input[type="search"]::-ms-reveal {
+            display: none;
+            width: 0;
+            height: 0;
         }
 
         .hero-search input:focus {
@@ -225,51 +366,54 @@
 
         .hero-search .search-controls {
             position: absolute;
-            right: 1rem;
+            right: 1.5rem;
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0;
         }
 
         .hero-search .clear-search {
-            background: var(--text-secondary);
-            color: white;
+            background: transparent;
+            color: var(--text-secondary);
             border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            padding: 0.4rem;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s;
             display: none;
+            line-height: 1;
+            position: absolute;
+            right: 0;
         }
 
         .hero-search .clear-search.visible {
             display: block;
-            tabindex: 0;
         }
 
         .hero-search .clear-search:hover {
-            background: var(--text-primary);
-            transform: scale(1.05);
+            color: var(--text-primary);
+            transform: scale(1.15);
         }
 
         .hero-search .clear-search:focus {
-            outline: 3px solid #fbbf24;
+            outline: 2px solid #fbbf24;
             outline-offset: 2px;
-        }
-
-        .hero-search .clear-search:focus-visible {
-            outline: 3px solid #fbbf24;
-            outline-offset: 2px;
+            border-radius: 4px;
         }
 
         .hero-search .search-icon {
             font-size: 1.2rem;
             color: var(--text-secondary);
             pointer-events: none;
+            display: block;
+            line-height: 1;
+            transition: all 0.3s;
+        }
+
+        .hero-search .search-icon.hidden {
+            display: none;
         }
 
         .categories {
@@ -278,7 +422,7 @@
 
         .section-title {
             font-size: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             text-align: center;
             font-weight: 600;
         }
@@ -351,15 +495,22 @@
 
         .popular-tools {
             background: white;
-            padding: 4rem 0 3rem;
+            padding: 4rem 0 5rem;
+        }
+
+        @media (max-width: 768px) {
+            .popular-tools {
+                padding: 3rem 0 4rem;
+            }
         }
 
         .tool-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            min-height: 200px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            min-height: 350px;
             position: relative;
+            padding: 2rem 0;
         }
 
         .empty-state {
@@ -369,9 +520,15 @@
             transform: translate(-50%, -50%);
             text-align: center;
             color: var(--text-secondary);
-            width: 100%;
-            padding: 2rem;
+            width: calc(100% - 2rem);
+            max-width: 500px;
+            padding: 3rem 2rem;
             display: none;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 2px dashed var(--border);
+            z-index: 10;
         }
 
         .empty-state.show {
@@ -379,44 +536,201 @@
         }
 
         .empty-state-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.4;
+            filter: grayscale(0.3);
         }
 
         .empty-state h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
             color: var(--text-primary);
+            font-weight: 600;
         }
 
         .empty-state p {
-            font-size: 0.95rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
         }
 
         @media (max-width: 768px) {
             .tool-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                min-height: 300px;
+                padding: 1.5rem 0;
+            }
+
+            .tool-card {
+                padding: 1.75rem 1.25rem;
+            }
+
+            .tool-icon {
+                font-size: 2.25rem;
+            }
+
+            .tool-title {
+                font-size: 0.95rem;
+            }
+
+            .empty-state {
+                padding: 2.5rem 1.5rem;
+                width: calc(100% - 1rem);
+            }
+
+            .empty-state-icon {
+                font-size: 3.5rem;
+            }
+
+            .empty-state h3 {
+                font-size: 1.2rem;
+            }
+
+            .empty-state p {
+                font-size: 0.95rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
             }
         }
 
         @media (max-width: 480px) {
             .tool-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+                min-height: 280px;
+                padding: 1.5rem 0;
+            }
+
+            .tool-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .tool-icon {
+                font-size: 2.5rem;
+            }
+
+            .tool-title {
+                font-size: 1rem;
+            }
+
+            .empty-state {
+                padding: 2rem 1.25rem;
+            }
+
+            .empty-state-icon {
+                font-size: 3rem;
+            }
+
+            .empty-state h3 {
+                font-size: 1.15rem;
+            }
+
+            .empty-state p {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.75rem;
             }
         }
 
         .tool-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.25rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-decoration: none;
             color: var(--text-primary);
             animation: fadeIn 0.3s ease-in;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 0;
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.15), 0 6px 12px rgba(37, 99, 235, 0.1);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .tool-card:focus {
+            outline: 3px solid #fbbf24;
+            outline-offset: 3px;
+            border-color: var(--primary);
+        }
+
+        .tool-card:focus-visible {
+            outline: 3px solid #fbbf24;
+            outline-offset: 3px;
+        }
+
+        .tool-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .tool-card h4::before {
+            content: attr(data-icon);
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .tool-card:hover h4::before {
+            transform: scale(1.15) translateY(-4px);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: transform 0.3s;
+        }
+
+        .tool-card:hover .tool-icon {
+            transform: scale(1.15) translateY(-4px);
+        }
+
+        .tool-title {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         @keyframes fadeIn {
@@ -432,28 +746,6 @@
 
         .tool-card.hidden {
             display: none;
-        }
-
-        .tool-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow);
-            transform: translateY(-2px);
-        }
-
-        .tool-card:focus {
-            outline: 3px solid #fbbf24;
-            outline-offset: 2px;
-            border-color: var(--primary);
-        }
-
-        .tool-card:focus-visible {
-            outline: 3px solid #fbbf24;
-            outline-offset: 2px;
-        }
-
-        .tool-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
         }
 
         .features {
@@ -491,11 +783,32 @@
             color: white;
             padding: 2rem 0;
             text-align: center;
-            margin-top: 3rem;
+            margin-top: auto;
+            width: 100%;
         }
 
         .footer p {
             opacity: 0.8;
+            margin: 0;
+        }
+
+        /* Ensure body takes full height */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Main content area should grow to push footer down */
+        #homePage,
+        .calculator-page {
+            flex: 1 0 auto;
         }
 
         @media (max-width: 768px) {
@@ -600,7 +913,7 @@
 
             .hero-search input {
                 font-size: 16px; /* Prevents zoom on iOS */
-                padding: 0.875rem 7rem 0.875rem 1.25rem;
+                padding: 0.875rem 3rem 0.875rem 1.25rem;
             }
 
             .form-group input,
@@ -706,12 +1019,12 @@
 
             /* Extra small: Search bar */
             .hero-search input {
-                padding: 0.75rem 6rem 0.75rem 1rem;
+                padding: 0.75rem 3rem 0.75rem 1rem;
             }
 
             .hero-search .clear-search {
-                font-size: 0.8rem;
-                padding: 0.35rem 0.75rem;
+                font-size: 1rem;
+                padding: 0.35rem;
             }
         }
 
@@ -1243,6 +1556,169 @@
             line-height: 1.8;
         }
 
+        /* Calculator Not Found Page Styles */
+        .not-found-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .not-found-icon {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+            opacity: 0.6;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        .not-found-title {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .not-found-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .not-found-suggestions {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--background);
+            border-radius: 12px;
+        }
+
+        .not-found-suggestions h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .suggestion-card {
+            background: white;
+            padding: 1.5rem 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .suggestion-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);
+        }
+
+        .suggestion-icon {
+            font-size: 2.5rem;
+        }
+
+        .suggestion-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .home-btn {
+            padding: 1rem 2.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2rem;
+        }
+
+        .home-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .not-found-container {
+                margin: 2rem auto;
+                padding: 2rem 1.5rem;
+            }
+
+            .not-found-icon {
+                font-size: 4rem;
+            }
+
+            .not-found-title {
+                font-size: 2rem;
+            }
+
+            .not-found-text {
+                font-size: 1.05rem;
+            }
+
+            .suggestion-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .not-found-container {
+                margin: 1.5rem auto;
+                padding: 1.5rem 1rem;
+            }
+
+            .not-found-icon {
+                font-size: 3.5rem;
+            }
+
+            .not-found-title {
+                font-size: 1.75rem;
+            }
+
+            .not-found-text {
+                font-size: 1rem;
+            }
+
+            .suggestion-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .home-btn {
+                width: 100%;
+                padding: 1rem;
+            }
+        }
+
         /* Percentage Calculator Specific Styles */
         .percentage-calc-container {
             max-width: 900px;
@@ -1545,11 +2021,16 @@
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <div class="logo">📊 CalcHub</div>
-                <ul class="nav-links">
-                    <li><a href="#" onclick="showHome()">Home</a></li>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Favorites</a></li>
+                <a href="#" class="logo" onclick="showHome(); return false;">📊 CalcHub</a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#" onclick="showHome(); closeMenu();">Home</a></li>
+                    <li><a href="#" onclick="closeMenu();">Dashboard</a></li>
+                    <li><a href="#" onclick="closeMenu();">Favorites</a></li>
                 </ul>
             </nav>
         </div>
@@ -1603,11 +2084,12 @@
                             id="clearSearch" 
                             onclick="clearSearch()"
                             aria-label="Clear search"
+                            title="Clear search"
                             tabindex="-1"
                         >
-                            Clear
+                            ✕
                         </button>
-                        <span class="search-icon" aria-hidden="true">🔍</span>
+                        <span class="search-icon" id="searchIcon" aria-hidden="true">🔍</span>
                     </div>
                     <div 
                         id="searchResults" 
@@ -1625,28 +2107,36 @@
                 <h2 class="section-title">Popular Tools</h2>
                 <div class="tool-grid" id="toolGrid">
                     <a href="#" class="tool-card" data-category="finance" onclick="showCalculator('mortgage'); return false;">
-                        <h4>🏠 Mortgage Calculator</h4>
+                        <span class="tool-icon">🏠</span>
+                        <h4><span class="tool-title">Mortgage Calculator</span></h4>
                     </a>
                     <a href="#" class="tool-card" data-category="health" onclick="showCalculator('bmi'); return false;">
-                        <h4>⚖️ BMI Calculator</h4>
+                        <span class="tool-icon">⚖️</span>
+                        <h4><span class="tool-title">BMI Calculator</span></h4>
                     </a>
                     <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('age'); return false;">
-                        <h4>🎂 Age Calculator</h4>
+                        <span class="tool-icon">🎂</span>
+                        <h4><span class="tool-title">Age Calculator</span></h4>
                     </a>
                     <a href="#" class="tool-card" data-category="finance" onclick="showCalculator('loan'); return false;">
-                        <h4>💳 Loan Calculator</h4>
+                        <span class="tool-icon">💳</span>
+                        <h4><span class="tool-title">Loan Calculator</span></h4>
                     </a>
                     <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('tip'); return false;">
-                        <h4>💵 Tip Calculator</h4>
+                        <span class="tool-icon">💵</span>
+                        <h4><span class="tool-title">Tip Calculator</span></h4>
                     </a>
                     <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('percentage'); return false;">
-                        <h4>📊 Percentage Calculator</h4>
+                        <span class="tool-icon">📊</span>
+                        <h4><span class="tool-title">Percentage Calculator</span></h4>
                     </a>
                     <a href="#" class="tool-card" data-category="everyday" onclick="showCalculator('discount'); return false;">
-                        <h4>🏷️ Discount Calculator</h4>
+                        <span class="tool-icon">🏷️</span>
+                        <h4><span class="tool-title">Discount Calculator</span></h4>
                     </a>
                     <a href="#" class="tool-card" data-category="health" onclick="showCalculator('calorie'); return false;">
-                        <h4>🍎 Calorie Calculator</h4>
+                        <span class="tool-icon">🍎</span>
+                        <h4><span class="tool-title">Calorie Calculator</span></h4>
                     </a>
                     <div class="empty-state" id="emptyState">
                         <div class="empty-state-icon">🔍</div>
@@ -2372,8 +2862,52 @@
             document.querySelectorAll('.calculator-page').forEach(page => {
                 page.classList.remove('active');
             });
+            
+            // Show category menu on home page
+            const categoryMenu = document.querySelector('.category-menu');
+            if (categoryMenu) {
+                categoryMenu.classList.remove('hidden');
+            }
+            
             window.scrollTo(0, 0);
         }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+            
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+            
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        // Hamburger menu event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleMenu);
+            }
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const navLinks = document.getElementById('navLinks');
+                const hamburger = document.getElementById('hamburger');
+                const nav = document.querySelector('.nav');
+                
+                if (navLinks && navLinks.classList.contains('active') && 
+                    !nav.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+        });
 
         function showCalculator(calcType) {
             document.getElementById('homePage').style.display = 'none';
@@ -2383,10 +2917,78 @@
             
             const calcId = calcType + 'Calc';
             const calcPage = document.getElementById(calcId);
+            
             if (calcPage) {
+                // Calculator exists, show it
                 calcPage.classList.add('active');
+                
+                // Hide category menu on calculator pages
+                const categoryMenu = document.querySelector('.category-menu');
+                if (categoryMenu) {
+                    categoryMenu.classList.add('hidden');
+                }
+            } else {
+                // Calculator doesn't exist, show error page
+                showCalculatorNotFound(calcType);
+                
+                // Hide category menu on error page too
+                const categoryMenu = document.querySelector('.category-menu');
+                if (categoryMenu) {
+                    categoryMenu.classList.add('hidden');
+                }
             }
+            
             window.scrollTo(0, 0);
+        }
+
+        function showCalculatorNotFound(calcType) {
+            // Check if error page already exists
+            let errorPage = document.getElementById('calcNotFoundPage');
+            
+            if (!errorPage) {
+                // Create error page if it doesn't exist
+                errorPage = document.createElement('div');
+                errorPage.id = 'calcNotFoundPage';
+                errorPage.className = 'calculator-page';
+                errorPage.innerHTML = `
+                    <div class="container">
+                        <a href="#" class="back-btn" onclick="showHome(); return false;">← Back to Home</a>
+                        <div class="not-found-container">
+                            <div class="not-found-icon">🔍</div>
+                            <h2 class="not-found-title">Calculator Not Found</h2>
+                            <p class="not-found-text">The calculator you're looking for doesn't exist yet or is under development.</p>
+                            <div class="not-found-suggestions">
+                                <h3>Try these popular calculators:</h3>
+                                <div class="suggestion-grid">
+                                    <a href="#" class="suggestion-card" onclick="showCalculator('mortgage'); return false;">
+                                        <span class="suggestion-icon">🏠</span>
+                                        <span class="suggestion-name">Mortgage Calculator</span>
+                                    </a>
+                                    <a href="#" class="suggestion-card" onclick="showCalculator('bmi'); return false;">
+                                        <span class="suggestion-icon">⚖️</span>
+                                        <span class="suggestion-name">BMI Calculator</span>
+                                    </a>
+                                    <a href="#" class="suggestion-card" onclick="showCalculator('age'); return false;">
+                                        <span class="suggestion-icon">🎂</span>
+                                        <span class="suggestion-name">Age Calculator</span>
+                                    </a>
+                                    <a href="#" class="suggestion-card" onclick="showCalculator('percentage'); return false;">
+                                        <span class="suggestion-icon">📊</span>
+                                        <span class="suggestion-name">Percentage Calculator</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <button class="home-btn" onclick="showHome()">Browse All Calculators</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Insert before footer
+                const footer = document.querySelector('.footer');
+                footer.parentNode.insertBefore(errorPage, footer);
+            }
+            
+            errorPage.classList.add('active');
         }
 
         // Category filtering functionality
@@ -2918,6 +3520,7 @@
         // Search functionality with accessibility
         const searchInput = document.getElementById('searchInput');
         const clearSearchBtn = document.getElementById('clearSearch');
+        const searchIcon = document.getElementById('searchIcon');
         const searchResults = document.getElementById('searchResults');
         
         searchInput.addEventListener('input', function(e) {
@@ -2941,10 +3544,11 @@
                 }
             });
             
-            // Show/hide clear button and update tabindex
+            // Show/hide clear button and search icon
             if (searchTerm.length > 0) {
                 clearSearchBtn.classList.add('visible');
                 clearSearchBtn.setAttribute('tabindex', '0');
+                searchIcon.classList.add('hidden');
                 
                 // Announce results to screen readers
                 if (visibleCount === 0) {
@@ -2957,6 +3561,7 @@
             } else {
                 clearSearchBtn.classList.remove('visible');
                 clearSearchBtn.setAttribute('tabindex', '-1');
+                searchIcon.classList.remove('hidden');
                 searchResults.textContent = '';
             }
         });
@@ -2989,15 +3594,17 @@
         function clearSearch() {
             const searchInput = document.getElementById('searchInput');
             const clearSearchBtn = document.getElementById('clearSearch');
+            const searchIcon = document.getElementById('searchIcon');
             const searchResults = document.getElementById('searchResults');
             const toolCards = document.querySelectorAll('.tool-card');
             
             // Clear input
             searchInput.value = '';
             
-            // Hide clear button
+            // Hide clear button, show search icon
             clearSearchBtn.classList.remove('visible');
             clearSearchBtn.setAttribute('tabindex', '-1');
+            searchIcon.classList.remove('hidden');
             
             // Clear screen reader announcement
             searchResults.textContent = 'Search cleared. All calculators in the current category are now visible.';
