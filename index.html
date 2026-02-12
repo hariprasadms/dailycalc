@@ -1382,6 +1382,45 @@
             margin-top: 3rem;
         }
 
+        /* Beam Calculator Styles */
+        .beam-diagram {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 2px solid #e2e8f0;
+            min-height: 200px;
+        }
+
+        .load-inputs {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .input-with-suffix {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-suffix input {
+            flex: 1;
+            padding-right: 60px;
+        }
+
+        .input-with-suffix .suffix {
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            pointer-events: none;
+            background: white;
+            padding: 0 0.25rem;
+        }
+
         .content-section h2 {
             font-size: 1.8rem;
             margin-bottom: 2rem;
@@ -2271,6 +2310,10 @@
                         <span class="tool-icon">🍎</span>
                         <h4><span class="tool-title">Calorie Calculator</span></h4>
                     </a>
+                    <a href="#" class="tool-card" data-category="converters" onclick="showCalculator('beam'); return false;">
+                        <span class="tool-icon">📐</span>
+                        <h4><span class="tool-title">Simple Beam Calculator</span></h4>
+                    </a>
                     <div class="empty-state" id="emptyState">
                         <div class="empty-state-icon">🔍</div>
                         <h3>No calculators found</h3>
@@ -3002,6 +3045,220 @@
         </div>
     </div>
 
+    <!-- Simple Beam Calculator -->
+    <div id="beamCalc" class="calculator-page">
+        <div class="container">
+            <a href="#" class="back-btn" onclick="showHome(); return false;">← Back to Home</a>
+            <div class="calc-container">
+                <div class="calc-header">
+                    <h2>📐 Simple Beam Calculator</h2>
+                    <p>Calculate reactions, shear force, bending moment, and deflection for simply supported beams</p>
+                    <button class="favorite-btn" id="favBtn-beam" onclick="toggleFavorite('beam', '📐 Simple Beam Calculator')">
+                        <span class="star-icon">☆</span>
+                        <span class="fav-text">Add to Favorites</span>
+                    </button>
+                </div>
+                
+                <form onsubmit="calculateBeam(event)">
+                    <!-- Beam Properties -->
+                    <div class="form-section">
+                        <h3>Beam Properties</h3>
+                        <div class="form-group">
+                            <label for="beamLength">Beam Length (L)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="beamLength" required min="0.1" step="0.1" value="10">
+                                <span class="suffix">m</span>
+                            </div>
+                            <small>Total span length of the beam</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="elasticModulus">Elastic Modulus (E)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="elasticModulus" required min="1" step="1" value="200000">
+                                <span class="suffix">MPa</span>
+                            </div>
+                            <small>Young's modulus of material (Steel: 200,000 MPa)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="momentOfInertia">Moment of Inertia (I)</label>
+                            <div class="input-with-suffix">
+                                <input type="number" id="momentOfInertia" required min="0.000001" step="0.000001" value="0.0001">
+                                <span class="suffix">m⁴</span>
+                            </div>
+                            <small>Second moment of area of cross-section</small>
+                        </div>
+                    </div>
+
+                    <!-- Loading Type -->
+                    <div class="form-section">
+                        <h3>Loading Configuration</h3>
+                        <div class="form-group">
+                            <label for="loadType">Load Type</label>
+                            <select id="loadType" onchange="updateLoadInputs()">
+                                <option value="point">Point Load (Concentrated)</option>
+                                <option value="udl">Uniformly Distributed Load (UDL)</option>
+                                <option value="moment">Applied Moment</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Point Load Inputs -->
+                        <div id="pointLoadInputs" class="load-inputs">
+                            <div class="form-group">
+                                <label for="pointLoad">Point Load (P)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="pointLoad" min="0.1" step="0.1" value="50">
+                                    <span class="suffix">kN</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="loadPosition">Load Position from Left Support (a)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="loadPosition" min="0" step="0.1" value="5">
+                                    <span class="suffix">m</span>
+                                </div>
+                                <small>Distance from left support</small>
+                            </div>
+                        </div>
+                        
+                        <!-- UDL Inputs -->
+                        <div id="udlInputs" class="load-inputs" style="display: none;">
+                            <div class="form-group">
+                                <label for="udlLoad">Uniformly Distributed Load (w)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="udlLoad" min="0.1" step="0.1" value="10">
+                                    <span class="suffix">kN/m</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Moment Inputs -->
+                        <div id="momentInputs" class="load-inputs" style="display: none;">
+                            <div class="form-group">
+                                <label for="appliedMoment">Applied Moment (M)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="appliedMoment" min="0.1" step="0.1" value="100">
+                                    <span class="suffix">kN⋅m</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="momentPosition">Moment Position from Left Support</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="momentPosition" min="0" step="0.1" value="5">
+                                    <span class="suffix">m</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="submit" class="calculate-btn">Calculate</button>
+                        <button type="button" class="clear-btn" onclick="clearBeamForm()">Clear</button>
+                    </div>
+                </form>
+
+                <div id="beamResults" class="result" style="display: none;">
+                    <h3>Results</h3>
+                    
+                    <!-- Reactions -->
+                    <div class="result-section">
+                        <h4>Support Reactions</h4>
+                        <div class="result-row">
+                            <span>Left Reaction (R₁):</span>
+                            <strong id="leftReaction">0 kN</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Right Reaction (R₂):</span>
+                            <strong id="rightReaction">0 kN</strong>
+                        </div>
+                    </div>
+
+                    <!-- Maximum Values -->
+                    <div class="result-section">
+                        <h4>Maximum Values</h4>
+                        <div class="result-row">
+                            <span>Maximum Shear Force:</span>
+                            <strong id="maxShear">0 kN</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Maximum Bending Moment:</span>
+                            <strong id="maxMoment">0 kN⋅m</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Location of Max Moment:</span>
+                            <strong id="momentLocation">0 m</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Maximum Deflection:</span>
+                            <strong id="maxDeflection">0 mm</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>Location of Max Deflection:</span>
+                            <strong id="deflectionLocation">0 m</strong>
+                        </div>
+                    </div>
+
+                    <!-- Beam Diagram -->
+                    <div class="result-section">
+                        <h4>Beam Diagram</h4>
+                        <div class="beam-diagram" id="beamDiagram">
+                            <!-- SVG diagram will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Educational Content -->
+            <div class="educational-content">
+                <section class="content-section">
+                    <h2>About Simple Beam Analysis</h2>
+                    <p>A simply supported beam is a structural element supported at both ends and free to rotate. This calculator helps engineers and students analyze the behavior of beams under various loading conditions.</p>
+
+                    <h3>Key Concepts</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>📊 Reactions</h4>
+                            <p>Support reactions are the forces exerted by supports to keep the beam in equilibrium. For a simply supported beam, R₁ + R₂ = Total Load.</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>✂️ Shear Force</h4>
+                            <p>Internal force perpendicular to the beam axis. Maximum shear typically occurs at supports.</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>🔄 Bending Moment</h4>
+                            <p>Internal moment causing the beam to bend. Critical for determining required beam strength.</p>
+                        </div>
+                        <div class="tip-card">
+                            <h4>↓ Deflection</h4>
+                            <p>Vertical displacement of the beam. Must be limited for serviceability and comfort.</p>
+                        </div>
+                    </div>
+
+                    <h3>Common Load Types</h3>
+                    <ul>
+                        <li><strong>Point Load:</strong> Concentrated force at a specific location (e.g., column load)</li>
+                        <li><strong>Uniformly Distributed Load (UDL):</strong> Load spread evenly along beam length (e.g., slab weight)</li>
+                        <li><strong>Applied Moment:</strong> Rotational force at a point (e.g., cantilever connection)</li>
+                    </ul>
+
+                    <h3>Material Properties</h3>
+                    <ul>
+                        <li><strong>Steel:</strong> E = 200,000 MPa (Most common structural material)</li>
+                        <li><strong>Concrete:</strong> E = 25,000-35,000 MPa (Depends on grade)</li>
+                        <li><strong>Timber:</strong> E = 10,000-15,000 MPa (Species dependent)</li>
+                        <li><strong>Aluminum:</strong> E = 70,000 MPa</li>
+                    </ul>
+
+                    <h3>Design Considerations</h3>
+                    <p><strong>Strength:</strong> Ensure maximum bending moment is within material capacity.</p>
+                    <p><strong>Serviceability:</strong> Limit deflection to L/250 to L/360 for typical applications.</p>
+                    <p><strong>Safety:</strong> Apply appropriate safety factors per code requirements.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
     <div id="favoritesPage" class="calculator-page">
         <div class="container">
             <div class="favorites-header">
@@ -3133,7 +3390,8 @@
                     'tip': { icon: '💵', name: 'Tip Calculator' },
                     'percentage': { icon: '📊', name: 'Percentage Calculator' },
                     'discount': { icon: '🏷️', name: 'Discount Calculator' },
-                    'calorie': { icon: '🍎', name: 'Calorie Calculator' }
+                    'calorie': { icon: '🍎', name: 'Calorie Calculator' },
+                    'beam': { icon: '📐', name: 'Simple Beam Calculator' }
                 };
                 
                 grid.innerHTML = favorites.map(fav => {
@@ -3697,6 +3955,197 @@
             document.getElementById('perPerson').textContent = '$' + perPerson.toFixed(2);
             
             document.getElementById('tipResult').classList.add('show');
+        }
+
+        // Simple Beam Calculator Functions
+        function updateLoadInputs() {
+            const loadType = document.getElementById('loadType').value;
+            
+            // Hide all load inputs
+            document.getElementById('pointLoadInputs').style.display = 'none';
+            document.getElementById('udlInputs').style.display = 'none';
+            document.getElementById('momentInputs').style.display = 'none';
+            
+            // Show selected load type inputs
+            if (loadType === 'point') {
+                document.getElementById('pointLoadInputs').style.display = 'block';
+            } else if (loadType === 'udl') {
+                document.getElementById('udlInputs').style.display = 'block';
+            } else if (loadType === 'moment') {
+                document.getElementById('momentInputs').style.display = 'block';
+            }
+        }
+
+        function calculateBeam(event) {
+            event.preventDefault();
+            
+            const L = parseFloat(document.getElementById('beamLength').value);
+            const E = parseFloat(document.getElementById('elasticModulus').value);
+            const I = parseFloat(document.getElementById('momentOfInertia').value);
+            const loadType = document.getElementById('loadType').value;
+            
+            let R1, R2, maxShear, maxMoment, momentLocation, maxDeflection, deflectionLocation;
+            
+            if (loadType === 'point') {
+                const P = parseFloat(document.getElementById('pointLoad').value);
+                const a = parseFloat(document.getElementById('loadPosition').value);
+                const b = L - a;
+                
+                // Reactions for point load
+                R1 = (P * b) / L;
+                R2 = (P * a) / L;
+                
+                // Maximum shear force
+                maxShear = Math.max(R1, R2);
+                
+                // Maximum bending moment (at load point)
+                maxMoment = (R1 * a);
+                momentLocation = a;
+                
+                // Maximum deflection (at load point if a = b, otherwise calculate)
+                if (a <= L/2) {
+                    // Deflection under the load
+                    maxDeflection = (P * a * b * (L*L - b*b) * Math.sqrt(3)) / (27 * E * I * L);
+                    deflectionLocation = Math.sqrt((L*L - b*b)/3);
+                } else {
+                    maxDeflection = (P * a * b * (L*L - a*a) * Math.sqrt(3)) / (27 * E * I * L);
+                    deflectionLocation = Math.sqrt((L*L - a*a)/3);
+                }
+                
+                // Convert deflection to mm
+                maxDeflection = Math.abs(maxDeflection) * 1000 * 1000; // m to mm
+                
+            } else if (loadType === 'udl') {
+                const w = parseFloat(document.getElementById('udlLoad').value);
+                
+                // Reactions for UDL
+                R1 = R2 = (w * L) / 2;
+                
+                // Maximum shear force (at supports)
+                maxShear = R1;
+                
+                // Maximum bending moment (at center)
+                maxMoment = (w * L * L) / 8;
+                momentLocation = L / 2;
+                
+                // Maximum deflection (at center)
+                maxDeflection = (5 * w * Math.pow(L, 4)) / (384 * E * I);
+                maxDeflection = maxDeflection * 1000 * 1000; // m to mm
+                deflectionLocation = L / 2;
+                
+            } else if (loadType === 'moment') {
+                const M = parseFloat(document.getElementById('appliedMoment').value);
+                const a = parseFloat(document.getElementById('momentPosition').value);
+                const b = L - a;
+                
+                // Reactions for applied moment
+                R1 = -M / L;
+                R2 = M / L;
+                
+                // Maximum shear force
+                maxShear = Math.abs(M / L);
+                
+                // Maximum bending moment
+                maxMoment = Math.abs(M * b / L);
+                momentLocation = a;
+                
+                // Simplified deflection
+                maxDeflection = (M * L * L) / (9 * Math.sqrt(3) * E * I);
+                maxDeflection = Math.abs(maxDeflection) * 1000 * 1000; // m to mm
+                deflectionLocation = L / 2;
+            }
+            
+            // Display results
+            document.getElementById('leftReaction').textContent = R1.toFixed(2) + ' kN';
+            document.getElementById('rightReaction').textContent = R2.toFixed(2) + ' kN';
+            document.getElementById('maxShear').textContent = maxShear.toFixed(2) + ' kN';
+            document.getElementById('maxMoment').textContent = maxMoment.toFixed(2) + ' kN⋅m';
+            document.getElementById('momentLocation').textContent = momentLocation.toFixed(2) + ' m';
+            document.getElementById('maxDeflection').textContent = maxDeflection.toFixed(2) + ' mm';
+            document.getElementById('deflectionLocation').textContent = deflectionLocation.toFixed(2) + ' m';
+            
+            // Show results
+            document.getElementById('beamResults').style.display = 'block';
+            
+            // Draw beam diagram
+            drawBeamDiagram(L, loadType);
+        }
+
+        function drawBeamDiagram(L, loadType) {
+            const diagram = document.getElementById('beamDiagram');
+            const width = 600;
+            const height = 200;
+            const scale = 500 / L; // Scale factor for visualization
+            const beamY = height / 2;
+            
+            let svg = `<svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" style="max-width: 600px; margin: 0 auto; display: block;">`;
+            
+            // Draw beam
+            svg += `<line x1="50" y1="${beamY}" x2="${50 + L * scale}" y2="${beamY}" stroke="#2563eb" stroke-width="6"/>`;
+            
+            // Draw left support (triangle)
+            svg += `<path d="M 50 ${beamY} L 40 ${beamY + 15} L 60 ${beamY + 15} Z" fill="#1e293b"/>`;
+            svg += `<line x1="40" y1="${beamY + 15}" x2="60" y2="${beamY + 15}" stroke="#1e293b" stroke-width="2"/>`;
+            
+            // Draw right support (triangle)
+            const rightX = 50 + L * scale;
+            svg += `<path d="M ${rightX} ${beamY} L ${rightX - 10} ${beamY + 15} L ${rightX + 10} ${beamY + 15} Z" fill="#1e293b"/>`;
+            svg += `<line x1="${rightX - 10}" y1="${beamY + 15}" x2="${rightX + 10}" y2="${beamY + 15}" stroke="#1e293b" stroke-width="2"/>`;
+            
+            // Draw load based on type
+            if (loadType === 'point') {
+                const a = parseFloat(document.getElementById('loadPosition').value);
+                const loadX = 50 + a * scale;
+                // Draw arrow pointing down
+                svg += `<line x1="${loadX}" y1="${beamY - 40}" x2="${loadX}" y2="${beamY - 5}" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowhead)"/>`;
+                svg += `<text x="${loadX}" y="${beamY - 50}" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">P</text>`;
+            } else if (loadType === 'udl') {
+                // Draw distributed load (multiple arrows)
+                for (let i = 0; i <= 10; i++) {
+                    const x = 50 + (i * L * scale / 10);
+                    svg += `<line x1="${x}" y1="${beamY - 30}" x2="${x}" y2="${beamY - 5}" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead)"/>`;
+                }
+                svg += `<text x="${50 + (L * scale / 2)}" y="${beamY - 40}" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">w</text>`;
+            } else if (loadType === 'moment') {
+                const a = parseFloat(document.getElementById('momentPosition').value);
+                const loadX = 50 + a * scale;
+                // Draw curved arrow for moment
+                svg += `<circle cx="${loadX}" cy="${beamY - 20}" r="15" fill="none" stroke="#ef4444" stroke-width="3"/>`;
+                svg += `<path d="M ${loadX + 10} ${beamY - 25} L ${loadX + 15} ${beamY - 20} L ${loadX + 10} ${beamY - 15}" fill="#ef4444"/>`;
+                svg += `<text x="${loadX}" y="${beamY - 50}" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="bold">M</text>`;
+            }
+            
+            // Add arrow marker definition
+            svg += `<defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                    <polygon points="0 0, 10 5, 0 10" fill="#ef4444"/>
+                </marker>
+            </defs>`;
+            
+            // Add labels
+            svg += `<text x="50" y="${beamY + 35}" text-anchor="middle" font-size="12">R₁</text>`;
+            svg += `<text x="${rightX}" y="${beamY + 35}" text-anchor="middle" font-size="12">R₂</text>`;
+            svg += `<text x="50" y="${height - 5}" text-anchor="middle" font-size="12" fill="#64748b">0</text>`;
+            svg += `<text x="${rightX}" y="${height - 5}" text-anchor="middle" font-size="12" fill="#64748b">${L} m</text>`;
+            
+            svg += `</svg>`;
+            
+            diagram.innerHTML = svg;
+        }
+
+        function clearBeamForm() {
+            document.getElementById('beamLength').value = '10';
+            document.getElementById('elasticModulus').value = '200000';
+            document.getElementById('momentOfInertia').value = '0.0001';
+            document.getElementById('loadType').value = 'point';
+            document.getElementById('pointLoad').value = '50';
+            document.getElementById('loadPosition').value = '5';
+            document.getElementById('udlLoad').value = '10';
+            document.getElementById('appliedMoment').value = '100';
+            document.getElementById('momentPosition').value = '5';
+            
+            updateLoadInputs();
+            document.getElementById('beamResults').style.display = 'none';
         }
 
         // Percentage Calculator Functions
